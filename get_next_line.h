@@ -31,9 +31,9 @@ typedef struct s_utils
 }			t_utils;
 
 char		*get_next_line(int fd);
-char		*ft_strjoin(char *line, char *buffer);
-char		*ft_strdup(char *str);
-void		ft_strlcpy(char *dst, char *src, int dstsize);
+char		*get_ft_strjoin(char *line, char *buffer);
+char		*get_ft_strdup(char *str);
+void		get_ft_strlcpy(char *dst, char *src, int dstsize);
 int			ft_trunc(char *str);
 
 #endif

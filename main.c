@@ -22,5 +22,5 @@ int main(int ac, char **av)
 	// int	fd;
 	//
 	// printf("checker %d\n", ext_checker(av[1]));
-	ft_atoi("1337");
+	printf("%d\n", ft_atoi("1337"));
 }

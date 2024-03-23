@@ -27,9 +27,9 @@ static char	*ne_line(char **line, int truncated)
 	next_line = malloc(truncated + 2);
 	if (!next_line)
 		return (freed(line));
-	ft_strlcpy(next_line, *line, truncated + 2);
+	get_ft_strlcpy(next_line, *line, truncated + 2);
 	tmp = *line;
-	*line = ft_strdup((*line) + truncated + 1);
+	*line = get_ft_strdup((*line) + truncated + 1);
 	freed(&tmp);
 	return (next_line);
 }
@@ -38,7 +38,7 @@ static char	*last_line(char **line)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(*line);
+	tmp = get_ft_strdup(*line);
 	freed(line);
 	return (tmp);
 }
@@ -68,7 +68,7 @@ char	*get_next_line(int fd)
 		utils.readed = read(fd, utils.buffer, BUFFER_SIZE);
 		utils.buffer[utils.readed] = '\0';
 		utils.tmp = line;
-		line = ft_strjoin(line, utils.buffer);
+		line = get_ft_strjoin(line, utils.buffer);
 		freed(&utils.tmp);
 		utils.truncated = ft_trunc(line);
 	}

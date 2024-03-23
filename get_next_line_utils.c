@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-static int	ft_strlen(char *s1)
+static int	get_ft_strlen(char *s1)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static int	ft_strlen(char *s1)
 	return (i);
 }
 
-void	ft_strlcpy(char *dst, char *src, int dstsize)
+void	get_ft_strlcpy(char *dst, char *src, int dstsize)
 {
 	int	i;
 
@@ -37,7 +37,7 @@ void	ft_strlcpy(char *dst, char *src, int dstsize)
 	dst[i] = '\0';
 }
 
-char	*ft_strdup(char *s1)
+char	*get_ft_strdup(char *s1)
 {
 	char	*str;
 	int		len;
@@ -46,7 +46,7 @@ char	*ft_strdup(char *s1)
 	if (!s1 || !(*s1))
 		return (NULL);
 	i = 0;
-	len = ft_strlen(s1);
+	len = get_ft_strlen(s1);
 	str = malloc(len + 1);
 	if (!str)
 		return (NULL);
@@ -59,7 +59,7 @@ char	*ft_strdup(char *s1)
 	return (str);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*get_ft_strjoin(char *s1, char *s2)
 {
 	char	*res;
 	int		i;
@@ -69,8 +69,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	i = 0;
 	j = 0;
 	if (!s1)
-		return (ft_strdup(s2));
-	len = ft_strlen(s1) + ft_strlen(s2);
+		return (get_ft_strdup(s2));
+	len = get_ft_strlen(s1) + get_ft_strlen(s2);
 	res = malloc(len + 1);
 	if (!res)
 		return (NULL);
