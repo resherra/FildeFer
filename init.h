@@ -18,8 +18,8 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include "gnl/get_next_line.h"
-#include ""
+#include "get_next_line.h"
+#include "libft/libft.h"
 
 
 // open, close, read, write, malloc, free, perror, strerror, exit, ft_printf

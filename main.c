@@ -12,14 +12,15 @@
 
 #include "init.h"
 
-int ext_checker(char *arg)
-{
-	
-}
+// int ext_checker(char *arg)
+// {
+//
+// }
 
 int main(int ac, char **av)
 {
-	int	fd;
-	
-	printf("checker %d\n", ext_checker(av[1]));
+	// int	fd;
+	//
+	// printf("checker %d\n", ext_checker(av[1]));
+	ft_atoi("1337");
 }
