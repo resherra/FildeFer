@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: recherra <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/24 19:01:46 by recherra          #+#    #+#             */
-/*   Updated: 2024/01/04 21:40:02 by recherra         ###   ########.fr       */
+/*   Created: 2024/03/23 17:34:46 by recherra          #+#    #+#             */
+/*   Updated: 2024/03/23 17:34:48 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "init.h"
 
-t_list	*ft_lstlast(t_list *lst)
+int ext_checker(char *arg)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+	
+}
+
+int main(int ac, char **av)
+{
+	int	fd;
+	
+	printf("checker %d\n", ext_checker(av[1]));
 }
