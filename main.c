@@ -17,19 +17,32 @@
 //
 // }
 
+void parse()
+{
+	
+}
+
 int main(int ac, char **av)
 {
-	// int	fd;
+	int fd;
 	
-	// printf("checker %d\n", ext_checker(av[1]));
+	//check the number of args
 	if (ac != 2)
 	{
 		printf("more/less arguments");
 		return 0;
 	}
-	if (strlen(av[1]) <= 4 || !ft_strnstr(av[1], ".fdf", strlen(av[1])))	
+	//args validation
+	if (ft_strlen(av[1]) <= 4 || !ft_strnstr(av[1], ".fdf", ft_strlen(av[1])))	
 	{
 		printf("invalid file");
 		return 0;
-	}	
+	}
+	fd = open(av[1], O_RDONLY);
+	char *str;
+	while ((str = get_next_line(fd)))
+	{
+		printf("%s\n", str);
+	}
+	
 }
