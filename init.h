@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include <string.h>
 #include "get_next_line.h"
 #include "libft/libft.h"
 

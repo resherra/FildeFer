@@ -20,7 +20,16 @@
 int main(int ac, char **av)
 {
 	// int	fd;
-	//
+	
 	// printf("checker %d\n", ext_checker(av[1]));
-	printf("%d\n", ft_atoi("1337"));
+	if (ac != 2)
+	{
+		printf("more/less arguments");
+		return 0;
+	}
+	if (strlen(av[1]) <= 4 || !ft_strnstr(av[1], ".fdf", strlen(av[1])))	
+	{
+		printf("invalid file");
+		return 0;
+	}	
 }
