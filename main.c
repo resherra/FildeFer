@@ -29,7 +29,6 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-
 //count the cols and rows of a map
 int rows_count(char *line)
 {
@@ -69,33 +68,36 @@ void cols_rows_count(char *map, int *x, int *y)
 int main(int ac, char **av)
 {
 	t_pcord **points;
+	t_map_size plan;
 	int fd;
 	char *str;
 
 	int i = 0;
-	int x = 0;
-	int y = 0;
-
+	
 	// validate the map
 	map_checker(ac, av[1]);
 
 	// cols and rows of the map
-	cols_rows_count(av[1], &x, &y);
 	
+	printf("before x = %d | y = %d \n", plan.x, plan.y);
+	cols_rows_count(av[1], &plan.x, &plan.y);
+	printf("after x = %d | y = %d \n", plan.x, plan.y);	
 	//points mem allocation
-	points = malloc(y * sizeof (t_pcord *));
-	if (!points)
-		return 0;
-	while (i < y)
-	{
-		points[i] = malloc(x * sizeof(t_pcord));
-		if (!points[i])
-		{
-			//free here;
-			exit(1);	
-		}
-		i++;
-	}
+	
+	// points = malloc(plan.y * sizeof (t_pcord *));
+// 	if (!points)
+// 		return 0;
+// 	while (i < plan.y)
+// 	{
+// 		points[i] = malloc(plan.x * sizeof(t_pcord));
+// 		if (!points[i])
+// 		{
+// 			//free here;
+// 			exit(1);
+// 		}
+// 		i++;
+// 	}
+	
 	// system("leaks -q a.out");
 }
 

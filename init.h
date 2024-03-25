@@ -34,5 +34,10 @@ typedef struct s_pcord
 	int col;
 } t_pcord;
 
+typedef struct s_map_size {
+	int x;
+	int y;
+} t_map_size;
+
 
 #endif
