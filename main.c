@@ -12,6 +12,7 @@
 
 #include "init.h"
 
+//validate the arguments
 void	map_checker(int ac, char *map)
 {
 	//check the number of args
@@ -29,6 +30,7 @@ void	map_checker(int ac, char *map)
 }
 
 
+//count the cols and rows of a map
 int rows_count(char *line)
 {
 	int rows;
@@ -51,8 +53,6 @@ void cols_rows_count(char *map, int *x, int *y)
 	int fd;
 	char *str;
 
-
-
 	str = NULL;
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
@@ -61,13 +61,14 @@ void cols_rows_count(char *map, int *x, int *y)
 	{
 		*x = rows_count(str); 
 		(*y)++;
+		free(str);
 	}
-	printf("rows %d", *x);
 }
 
+//main
 int main(int ac, char **av)
 {
-	t_pcord **cords;
+	t_pcord **points;
 	int fd;
 	char *str;
 
@@ -78,8 +79,24 @@ int main(int ac, char **av)
 	// validate the map
 	map_checker(ac, av[1]);
 
-	// width and height of the map
+	// cols and rows of the map
 	cols_rows_count(av[1], &x, &y);
+	
+	//points mem allocation
+	points = malloc(y * sizeof (t_pcord *));
+	if (!points)
+		return 0;
+	while (i < y)
+	{
+		points[i] = malloc(x * sizeof(t_pcord));
+		if (!points[i])
+		{
+			//free here;
+			exit(1);	
+		}
+		i++;
+	}
+	// system("leaks -q a.out");
 }
 
 
