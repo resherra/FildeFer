@@ -78,28 +78,27 @@ int main(int ac, char **av)
 	map_checker(ac, av[1]);
 
 	// cols and rows of the map
-	
-	printf("before x = %d | y = %d \n", plan.x, plan.y);
 	cols_rows_count(av[1], &plan.x, &plan.y);
-	printf("after x = %d | y = %d \n", plan.x, plan.y);	
-	//points mem allocation
 	
-	// points = malloc(plan.y * sizeof (t_pcord *));
-// 	if (!points)
-// 		return 0;
-// 	while (i < plan.y)
-// 	{
-// 		points[i] = malloc(plan.x * sizeof(t_pcord));
-// 		if (!points[i])
-// 		{
-// 			//free here;
-// 			exit(1);
-// 		}
-// 		i++;
-// 	}
+	//points mem allocation
+	points = malloc(plan.y * sizeof (t_pcord *));
+	if (!points)
+		return 0;
+	while (i < plan.y)
+	{
+		points[i] = malloc(plan.x * sizeof(t_pcord));
+		if (!points[i])
+		{
+			//free here;
+			exit(1);
+		}
+		i++;
+	}
+	
 	
 	// system("leaks -q a.out");
 }
+
 
 
 // int main(int ac, char **av)
