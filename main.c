@@ -62,6 +62,7 @@ void cols_rows_count(char *map, int *x, int *y)
 		(*y)++;
 		free(str);
 	}
+	close(fd);
 }
 
 //main
