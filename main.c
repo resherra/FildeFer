@@ -58,46 +58,79 @@ void cols_rows_count(char *map, int *x, int *y)
 		exit(1);
 	while ((str = get_next_line(fd)))
 	{
-		*x = rows_count(str); 
-		(*y)++;
-		free(str);
+        //to calculate the rows only for the first time
+        if (*y == 0)
+            *x = rows_count(str);
+        (*y)++;
+        free(str);
 	}
 	close(fd);
 }
 
-//main
-int main(int ac, char **av)
+void ft_print(t_map_size plan, t_pcord **points)
 {
-	t_pcord **points;
-	t_map_size plan;
-	int fd;
-	char *str;
+    int i = 0;
+    int j = 0;
 
-	int i = 0;
-	
-	// validate the map
-	map_checker(ac, av[1]);
 
-	// cols and rows of the map
-	cols_rows_count(av[1], &plan.x, &plan.y);
-	
-	//points mem allocation
-	points = malloc(plan.y * sizeof (t_pcord *));
-	if (!points)
-		return 0;
-	while (i < plan.y)
-	{
-		points[i] = malloc(plan.x * sizeof(t_pcord));
-		if (!points[i])
-		{
-			//free here;
-			exit(1);
-		}
-		i++;
-	}
-	
-	
-	// system("leaks -q a.out");
+    while (i < plan.y)
+    {
+        while (j < plan.x)
+        {
+            printf("%3d", points[i][j].z);
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
+}
+
+//main
+int main(int ac, char **av) {
+    t_pcord **points;
+    t_map_size plan;
+    int fd;
+
+    int i = 0;
+
+    // validate the map
+    map_checker(ac, av[1]);
+
+    // cols and rows of the map
+    cols_rows_count(av[1], &plan.x, &plan.y);
+
+    //points mem allocation
+    points = malloc(plan.y * sizeof(t_pcord *));
+    if (!points)
+        return 0;
+    while (i < plan.y) {
+        points[i] = malloc(plan.x * sizeof(t_pcord));
+        if (!points[i]) {
+            //free here;
+            exit(1);
+        }
+        i++;
+    }
+
+    i = 0;
+    int j = 0;
+    fd = open(av[1], O_RDONLY);
+    if (fd != 0)
+    {
+        return 0;
+    }
+    while (i < plan.y)
+    {
+        while (j < plan.x)
+        {
+            points[i][j].z = ft_atoi(ft_split(get_next_line(fd), ' ')[j]);
+            j++;
+        }
+        i++;
+    }
+
+    ft_print(plan, points);
+//    system("leaks -q a.out");
 }
 
 
