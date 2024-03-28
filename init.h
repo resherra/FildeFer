@@ -26,6 +26,11 @@
 // open, close, read, write, malloc, free, perror, strerror, exit, ft_printf
 
 
+//0 0 0 0
+//0 1 42 0
+//0 0 0 0
+
+
 typedef struct s_pcord
 {
 	int x;

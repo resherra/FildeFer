@@ -56,6 +56,7 @@ void cols_rows_count(char *map, int *x, int *y)
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
 		exit(1);
+
 	while ((str = get_next_line(fd)))
 	{
         //to calculate the rows only for the first time
@@ -64,17 +65,22 @@ void cols_rows_count(char *map, int *x, int *y)
         (*y)++;
         free(str);
 	}
+
+//	width and height
+//    printf("x ==> %d\n", *x);
+//    printf("y ==> %d\n", *y);
+
 	close(fd);
 }
 
-void ft_print(t_map_size plan, t_pcord **points)
+void print(t_pcord **points, t_map_size plan)
 {
     int i = 0;
     int j = 0;
 
-
     while (i < plan.y)
     {
+        j = 0;
         while (j < plan.x)
         {
             printf("%3d", points[i][j].z);
@@ -85,60 +91,97 @@ void ft_print(t_map_size plan, t_pcord **points)
     }
 }
 
+void    mem_allocation(t_map_size **plan, t_pcord ***points)
+{
+    int i;
+
+    i = 0;
+//    printf("1\n");
+//    exit(1);
+    *points = malloc((*plan)->y * sizeof(t_pcord *));
+
+    if (!*points)
+    {
+//        printf("2\n");
+//        exit(1);
+
+        printf("allocation problem");
+        exit(1);
+    }
+
+    while (i < (*plan)->y) {
+        *points[i] = malloc((*plan)->x * sizeof(t_pcord));
+        if (!(*points)[i]) {
+//            free here;
+            exit(1);
+        }
+        i++;
+    }
+}
+
+
 //main
 int main(int ac, char **av) {
-    t_pcord **points;
-    t_map_size plan;
+
     int fd;
+    int i;
+    int j;
+    t_pcord **points;
+    t_map_size *plan;
+    char **dots;
 
-    int i = 0;
-
+    i = 0;
     // validate the map
     map_checker(ac, av[1]);
 
     // cols and rows of the map
     cols_rows_count(av[1], &plan.x, &plan.y);
 
+    plan = malloc(sizeof(t_map_size));
+    mem_allocation(&plan, &points);
+
+
     //points mem allocation
-    points = malloc(plan.y * sizeof(t_pcord *));
-    if (!points)
-        return 0;
-    while (i < plan.y) {
-        points[i] = malloc(plan.x * sizeof(t_pcord));
-        if (!points[i]) {
-            //free here;
-            exit(1);
-        }
-        i++;
-    }
+//    points = malloc(plan.y * sizeof(t_pcord *));
+//    if (!points)
+//        return 0;
+//    while (i < plan.y) {
+//        points[i] = malloc(plan.x * sizeof(t_pcord));
+//        if (!points[i]) {
+////            free here;
+//            exit(1);
+//        }
+//        i++;
+//    }
 
-    i = 0;
-    int j = 0;
+
+
+    //map dots
     fd = open(av[1], O_RDONLY);
-    if (fd != 0)
+    if (fd == -1)
     {
-        return 0;
+        printf("invalid fd");
+        exit(1);
     }
-    while (i < plan.y)
+    i = 0;
+    j = 0;
+
+    char *str;
+    while ((str = get_next_line(fd)) && (dots = ft_split(str, ' ')) && j < plan->y)
     {
-        while (j < plan.x)
+        i = 0;
+        while (dots[i])
         {
-            points[i][j].z = ft_atoi(ft_split(get_next_line(fd), ' ')[j]);
-            j++;
+            points[j][i].x = i;
+            points[j][i].y = j;
+            points[j][i].z = ft_atoi(dots[i]);
+            i++;
         }
-        i++;
+        j++;
+        //free str and dots
     }
 
-    ft_print(plan, points);
+    print(points, plan);
+
 //    system("leaks -q a.out");
 }
-
-
-
-// int main(int ac, char **av)
-// {
-// 	int fd = open(av[1], O_RDONLY);
-// 	char *str;
-// 	while ((str = get_next_line(fd)))
-// 		printf("%s", str);
-// }
