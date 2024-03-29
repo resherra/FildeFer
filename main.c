@@ -157,7 +157,7 @@ int	power(int base, int exp)
     return result;
 }
 
-int	hx(char *str)
+int	hextod(char *str)
 {
     char *base = "0123456789abcdef";
     char rev_str[7];
@@ -182,10 +182,7 @@ int	hx(char *str)
         while (base[j])
         {
             if (rev_str[i] == base[j])
-            {
                 result += j * power(16, i);
-
-            }
             j++;
         }
         i++;
@@ -193,8 +190,6 @@ int	hx(char *str)
 
     return result;
 }
-
-
 
 //main
 int main(int ac, char **av) {
