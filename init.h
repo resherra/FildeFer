@@ -36,7 +36,7 @@ typedef struct s_pcord
 	int x;
 	int y;
 	int z;
-	int col;
+	int color;
 } t_pcord;
 
 typedef struct s_map_size {

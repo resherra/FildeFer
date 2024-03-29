@@ -58,7 +58,6 @@ void cols_rows_count(char *map, t_map_size *plan)
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
 		exit(1);
-
 	while ((str = get_next_line(fd)))
 	{
         //to calculate the rows only for the first time
@@ -111,35 +110,9 @@ void    mem_allocation(t_map_size *plan, t_pcord ***points)
     }
 }
 
-void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
-{
-    char **dots;
-    char *str;
-    int fd;
-    int i;
-    int j;
 
-    i = 0;
-    j = 0;
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
-    {
-        printf("open problem");
-        exit(1);
-    }
-    while ((str = get_next_line(fd)) && (dots = ft_split(str, ' ')) && j < plan->y )
-    {
-        i = 0;
-        while (dots[i])
-        {
-            (*points)[j][i].x = i;
-            (*points)[j][i].y = j;
-            (*points)[j][i].z = ft_atoi(dots[i]);
-            i++;
-        }
-        j++;
-    }
-}
+
+
 
 int	power(int base, int exp)
 {
@@ -157,7 +130,10 @@ int	power(int base, int exp)
     return result;
 }
 
-int	hextod(char *str)
+
+
+
+int	hex_to_de(char *str)
 {
     char *base = "0123456789abcdef";
     char rev_str[7];
@@ -191,17 +167,66 @@ int	hextod(char *str)
     return result;
 }
 
-//main
-int main(int ac, char **av) {
 
+int get_color(char *point)
+{
+    //255 || 0xff
+    int color;
+
+    color = 0;
+    char *res = ft_strchr(point, ',');
+    char *fin = ft_strtrim(res, ",0x");
+
+//    printf("color %s\n", fin);
+    if (fin)
+    {
+        color = hex_to_de(fin);
+        printf("color -> %d\n", color);
+    }
+    return color;
+}
+
+
+void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
+{
+    char **dots;
+    char *str;
     int fd;
     int i;
     int j;
-    t_pcord **points;
-    t_map_size *plan;
-    char **dots;
+    int color;
 
     i = 0;
+    j = 0;
+    fd = open(file, O_RDONLY);
+    if (fd == -1)
+    {
+        printf("open problem");
+        exit(1);
+    }
+    while ((str = get_next_line(fd)) && (dots = ft_split(str, ' ')) && j < plan->y )
+    {
+        i = 0;
+
+        while (dots[i])
+        {
+            (*points)[j][i].x = i;
+            (*points)[j][i].y = j;
+            (*points)[j][i].z = ft_atoi(dots[i]);
+            color = get_color(dots[i]);
+            (void)color;
+            i++;
+        }
+        j++;
+    }
+    close(fd);
+}
+//main
+int main(int ac, char **av) {
+
+    t_pcord **points;
+    t_map_size *plan;
+
     // validate the map
     map_checker(ac, av[1]);
 
@@ -218,6 +243,7 @@ int main(int ac, char **av) {
 
     //print map
     print(points, plan);
+    free(plan);
 
     //    system("leaks -q a.out");
 }
