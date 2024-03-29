@@ -141,6 +141,61 @@ void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
     }
 }
 
+int	power(int base, int exp)
+{
+    int i;
+    int result;
+
+    i = 0;
+    result = 1;
+    while (i < exp)
+    {
+        result *= base;
+        i++;
+    }
+
+    return result;
+}
+
+int	hx(char *str)
+{
+    char *base = "0123456789abcdef";
+    char rev_str[7];
+    int result;
+    int i;
+    int j;
+
+    i = strlen(str);
+    j = 0;
+    result = 0;
+    while (i)
+    {
+        i--;
+        rev_str[j++] = str[i];
+    }
+    rev_str[j] = '\0';
+    i = 0;
+    j = 0;
+    while (rev_str[i])
+    {
+        j = 0;
+        while (base[j])
+        {
+            if (rev_str[i] == base[j])
+            {
+                result += j * power(16, i);
+
+            }
+            j++;
+        }
+        i++;
+    }
+
+    return result;
+}
+
+
+
 //main
 int main(int ac, char **av) {
 
