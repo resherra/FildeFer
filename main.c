@@ -29,7 +29,7 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-//count the cols and rows of a map
+//count the cols and rows of the map
 int rows_count(char *line)
 {
 	int rows;
@@ -47,8 +47,6 @@ int rows_count(char *line)
 	return rows;
 }
 
-
-//depends on plan
 void cols_rows_count(char *map, t_map_size *plan)
 {
 	int fd;
@@ -70,6 +68,7 @@ void cols_rows_count(char *map, t_map_size *plan)
 	close(fd);
 }
 
+//print the map
 void print(t_pcord **points, t_map_size *plan)
 {
     int i = 0;
@@ -80,6 +79,7 @@ void print(t_pcord **points, t_map_size *plan)
         j = 0;
         while (j < plan->x)
         {
+
             printf("%3d", points[i][j].z);
             j++;
         }
@@ -88,6 +88,7 @@ void print(t_pcord **points, t_map_size *plan)
     }
 }
 
+//allocate mem for the map
 void    mem_allocation(t_map_size *plan, t_pcord ***points)
 {
     int i;
@@ -110,10 +111,7 @@ void    mem_allocation(t_map_size *plan, t_pcord ***points)
     }
 }
 
-
-
-
-
+//points color
 int	power(int base, int exp)
 {
     int i;
@@ -129,9 +127,6 @@ int	power(int base, int exp)
 
     return result;
 }
-
-
-
 
 int	hex_to_de(char *str)
 {
@@ -167,26 +162,51 @@ int	hex_to_de(char *str)
     return result;
 }
 
+int is_all_digits(char *str)
+{
+    int x;
+    int i;
+
+    i = 0;
+    x = 1;
+    while (str[i])
+    {
+        if (!ft_isdigit(str[i]))
+        {
+            x = 0;
+            break ;
+        }
+        i++;
+    }
+    return x;
+}
 
 int get_color(char *point)
 {
-    //255 || 0xff
     int color;
+    char *color_str;
+    char *fi;
 
-    color = 0;
-    char *res = ft_strchr(point, ',');
-    char *fin = ft_strtrim(res, ",0x");
 
-//    printf("color %s\n", fin);
-    if (fin)
+    color_str =  ft_strchr(point, ',');
+    fi = NULL;
+    color = 0xffffff;
+    if (color_str)
     {
-        color = hex_to_de(fin);
-        printf("color -> %d\n", color);
+        if (is_all_digits(color_str + 1))
+            color = ft_atoi(color_str + 1);
+        else
+        {
+            fi = ft_strtrim(color_str, ",0x");
+            color = hex_to_de(fi);
+        }
     }
+
+//    printf("color -> %d\n", color);
     return color;
 }
 
-
+//fill data
 void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
 {
     char **dots;
@@ -194,7 +214,6 @@ void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
     int fd;
     int i;
     int j;
-    int color;
 
     i = 0;
     j = 0;
@@ -213,14 +232,18 @@ void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
             (*points)[j][i].x = i;
             (*points)[j][i].y = j;
             (*points)[j][i].z = ft_atoi(dots[i]);
-            color = get_color(dots[i]);
-            (void)color;
+            (*points)[j][i].color = get_color(dots[i]);
+            free(dots[i]);
             i++;
         }
+        free(dots);
+        free(str);
         j++;
     }
     close(fd);
 }
+
+
 //main
 int main(int ac, char **av) {
 
@@ -243,7 +266,8 @@ int main(int ac, char **av) {
 
     //print map
     print(points, plan);
-    free(plan);
+//    free(plan);
 
-    //    system("leaks -q a.out");
+
+    system("leaks -q a.out");
 }
