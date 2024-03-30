@@ -10,17 +10,19 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC = joe.c hell.c
+SRC = get_color.c parsing_utils.c get_next_line.c get_next_line_utils.c main.c
+DEPEND = libft.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
 OBJ = ${SRC:.c=.o}
 NAME = testing.a
 
 all: ${NAME}
 
 ${NAME}: ${OBJ}
-	ar -rcs ${NAME} ${OBJ}
+	ar -rcs ${NAME} ${DEPEND} ${OBJ}
 
 clean:
 		rm -rf ${OBJ} ${OBONUS}
