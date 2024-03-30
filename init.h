@@ -11,38 +11,35 @@
 /* ************************************************************************** */
 
 #ifndef INIT_H
-#define INIT_H
+# define INIT_H
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <string.h>
-#include "get_next_line.h"
-#include "libft/libft.h"
-
+# include "get_next_line.h"
+# include "libft/libft.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
 // open, close, read, write, malloc, free, perror, strerror, exit, ft_printf
 
-
-//0 0 0 0
-//0 1 42 0
-//0 0 0 0
-
-
 typedef struct s_pcord
 {
-	int x;
-	int y;
-	int z;
-	int color;
-} t_pcord;
+	int	x;
+	int	y;
+	int	z;
+	int	color;
+}		t_pcord;
 
-typedef struct s_map_size {
-	int x;
-	int y;
-} t_map_size;
+typedef struct s_map_size
+{
+	int	x;
+	int	y;
+}		t_map_size;
 
+int		get_color(char *point);
+void	cols_rows_count(char *map, t_map_size *plan);
+void	map_dots(char *file, t_map_size *plan, t_pcord ***points);
+void	mem_allocation(t_map_size *plan, t_pcord ***points);
 
 #endif

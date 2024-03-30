@@ -29,245 +29,44 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-//count the cols and rows of the map
-int rows_count(char *line)
-{
-	int rows;
-	
-	rows = 0;
-	while (*line)
-	{
-		while (*line && *line == ' ')
-			line++;
-		if (*line)
-			rows++;
-		while (*line && *line != ' ')
-			line++;
-	}
-	return rows;
-}
-
-void cols_rows_count(char *map, t_map_size *plan)
-{
-	int fd;
-	char *str;
-
-	str = NULL;
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
-		exit(1);
-	while ((str = get_next_line(fd)))
-	{
-        //to calculate the rows only for the first time
-        if (plan->y == 0)
-            plan->x = rows_count(str);
-        plan->y++;
-        free(str);
-	}
-
-	close(fd);
-}
-
 //print the map
-void print(t_pcord **points, t_map_size *plan)
+void	print(t_pcord **points, t_map_size *plan)
 {
-    int i = 0;
-    int j = 0;
+	int	i;
+	int	j;
 
-    while (i < plan->y)
-    {
-        j = 0;
-        while (j < plan->x)
-        {
-
-            printf("%3d", points[i][j].z);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
+	i = 0;
+	j = 0;
+	while (i < plan->y)
+	{
+		j = 0;
+		while (j < plan->x)
+		{
+			printf("%6d", points[i][j].z);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 }
-
-//allocate mem for the map
-void    mem_allocation(t_map_size *plan, t_pcord ***points)
-{
-    int i;
-
-    i = 0;
-    *points = malloc(plan->y * sizeof(t_pcord *));
-    if (*points == NULL)
-    {
-        printf("allocation problem");
-        exit(1);
-    }
-    while (i < plan->y) {
-        (*points)[i] = malloc(plan->x * sizeof(t_pcord));
-        if ((*points)[i] == NULL)
-        {
-            //free here
-            exit(1);
-        }
-        i++;
-    }
-}
-
-//points color
-int	power(int base, int exp)
-{
-    int i;
-    int result;
-
-    i = 0;
-    result = 1;
-    while (i < exp)
-    {
-        result *= base;
-        i++;
-    }
-
-    return result;
-}
-
-int	hex_to_de(char *str)
-{
-    char *base = "0123456789abcdef";
-    char rev_str[7];
-    int result;
-    int i;
-    int j;
-
-    i = strlen(str);
-    j = 0;
-    result = 0;
-    while (i)
-    {
-        i--;
-        rev_str[j++] = str[i];
-    }
-    rev_str[j] = '\0';
-    i = 0;
-    j = 0;
-    while (rev_str[i])
-    {
-        j = 0;
-        while (base[j])
-        {
-            if (rev_str[i] == base[j])
-                result += j * power(16, i);
-            j++;
-        }
-        i++;
-    }
-
-    return result;
-}
-
-int is_all_digits(char *str)
-{
-    int x;
-    int i;
-
-    i = 0;
-    x = 1;
-    while (str[i])
-    {
-        if (!ft_isdigit(str[i]))
-        {
-            x = 0;
-            break ;
-        }
-        i++;
-    }
-    return x;
-}
-
-int get_color(char *point)
-{
-    int color;
-    char *color_str;
-    char *fi;
-
-
-    color_str =  ft_strchr(point, ',');
-    fi = NULL;
-    color = 0xffffff;
-    if (color_str)
-    {
-        if (is_all_digits(color_str + 1))
-            color = ft_atoi(color_str + 1);
-        else
-        {
-            fi = ft_strtrim(color_str, ",0x");
-            color = hex_to_de(fi);
-        }
-    }
-
-//    printf("color -> %d\n", color);
-    return color;
-}
-
-//fill data
-void    map_dots(char *file, t_map_size *plan, t_pcord ***points)
-{
-    char **dots;
-    char *str;
-    int fd;
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
-    {
-        printf("open problem");
-        exit(1);
-    }
-    while ((str = get_next_line(fd)) && (dots = ft_split(str, ' ')) && j < plan->y )
-    {
-        i = 0;
-
-        while (dots[i])
-        {
-            (*points)[j][i].x = i;
-            (*points)[j][i].y = j;
-            (*points)[j][i].z = ft_atoi(dots[i]);
-            (*points)[j][i].color = get_color(dots[i]);
-            free(dots[i]);
-            i++;
-        }
-        free(dots);
-        free(str);
-        j++;
-    }
-    close(fd);
-}
-
 
 //main
-int main(int ac, char **av) {
+int	main(int ac, char **av)
+{
+	t_pcord **points;
+	t_map_size *plan;
 
-    t_pcord **points;
-    t_map_size *plan;
+	map_checker(ac, av[1]);
 
-    // validate the map
-    map_checker(ac, av[1]);
+	plan = malloc(sizeof(t_map_size));
 
-    // cols and rows of the map
-    plan = malloc(sizeof(t_map_size));
+	cols_rows_count(av[1], plan);
 
-    cols_rows_count(av[1], plan);
+	mem_allocation(plan, &points);
 
-    //points mem allocation
-    mem_allocation(plan, &points);
+	map_dots(av[1], plan, &points);
 
-    //map dots
-    map_dots(av[1], plan, &points);
+	print(points, plan);
 
-    //print map
-    print(points, plan);
-//    free(plan);
-
-
-    system("leaks -q a.out");
+	system("leaks -q a.out");
 }
