@@ -42,7 +42,7 @@ void	print(t_pcord **points, t_map_size *plan)
 		j = 0;
 		while (j < plan->x)
 		{
-			printf("%6d", points[i][j].z);
+			printf("%3d", points[i][j].z);
 			j++;
 		}
 		printf("\n");
@@ -68,5 +68,10 @@ int	main(int ac, char **av)
 
 	print(points, plan);
 
-	system("leaks -q a.out");
+//    free(points);
+    for (int i = 0; i < plan->y; i++)
+        free(points[i]);
+    free(points);
+    free(plan);
+//	system("leaks -q a.out");
 }

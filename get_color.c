@@ -101,6 +101,6 @@ int	get_color(char *point)
 		}
 	}
 
-	//    printf("color -> %d\n", color);
+    free(fi);
 	return (color);
 }
