@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "libft/libft.h"
 #include "init.h"
 
 static int	power(int base, int exp)

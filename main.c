@@ -29,27 +29,6 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-//print the map
-void	print(t_pcord **points, t_map_size *plan)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < plan->y)
-	{
-		j = 0;
-		while (j < plan->x)
-		{
-			printf("%3d", points[i][j].z);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
 //main
 int	main(int ac, char **av)
 {
@@ -57,20 +36,16 @@ int	main(int ac, char **av)
 	t_map_size *plan;
 
 	map_checker(ac, av[1]);
-
 	plan = malloc(sizeof(t_map_size));
+    plan->x = 0;
+    plan->y = 0;
+    points = map_parse(av[1], plan);
 
-	cols_rows_count(av[1], plan);
-
-	mem_allocation(plan, &points);
-
-	map_dots(av[1], plan, &points);
-
-	print(points, plan);
-
-//    free(points);
+    //free up memory
     for (int i = 0; i < plan->y; i++)
+    {
         free(points[i]);
+    }
     free(points);
     free(plan);
 //	system("leaks -q a.out");
