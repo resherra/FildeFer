@@ -12,7 +12,6 @@
 
 #include "init.h"
 
-//validate the arguments
 void	map_checker(int ac, char *map)
 {
 	//check the number of args
