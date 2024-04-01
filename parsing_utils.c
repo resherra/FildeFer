@@ -19,11 +19,11 @@ static int	rows_count(char *line)
 	rows = 0;
 	while (*line)
 	{
-		while (*line && (*line == ' ' || *line == '\n'))
+		while (*line && *line == ' ')
 			line++;
 		if (*line)
 			rows++;
-		while (*line && (*line != ' ' || *line == '\n'))
+		while (*line && *line != ' ')
 			line++;
 	}
 	return (rows);
