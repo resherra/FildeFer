@@ -52,6 +52,9 @@ void	cols_rows_count(char *map, t_map_size *plan)
         }
         if (plan->x != first_row)
         {
+            //free here!
+            free(str);
+            free(plan);
             printf("the map is not rectangle\n");
             exit(1);
         }
