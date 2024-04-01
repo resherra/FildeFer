@@ -30,22 +30,22 @@ static int	power(int base, int exp)
 static int	hex_to_de(char *str)
 {
 	char	*base;
-	char	rev_str[7];
-	int		result;
+    char    rev_str[7];
+    int		result;
+
 	int		i;
 	int		j;
 
 	base = "0123456789abcdef";
-	i = ft_strlen(str);
 	j = 0;
+	i = ft_strlen(str);
 	result = 0;
-	while (i)
+	while (i--)
 	{
-		i--;
 		rev_str[j++] = str[i];
 	}
-	rev_str[j] = '\0';
-	i = 0;
+    rev_str[j - 1] = '\0';
+    i = 0;
 	j = 0;
 	while (rev_str[i])
 	{
@@ -96,7 +96,7 @@ int	get_color(char *point)
 		else
 		{
 			fi = ft_strtrim(color_str, ",0x");
-			color = hex_to_de(fi);
+            color = hex_to_de(fi);
 		}
 	}
 

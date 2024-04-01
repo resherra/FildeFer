@@ -34,6 +34,7 @@ int	main(int ac, char **av)
 	t_pcord **points;
 	t_map_size *plan;
 
+//	printf("arg -> %s\n", av[1]);
 	map_checker(ac, av[1]);
 	plan = malloc(sizeof(t_map_size));
     plan->x = 0;
