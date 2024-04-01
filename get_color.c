@@ -27,39 +27,39 @@ static int	power(int base, int exp)
 	return (result);
 }
 
-static int	hex_to_de(char *str)
-{
-	char	*base;
-    char    rev_str[7];
-    int		result;
 
-	int		i;
-	int		j;
+static int hex_to_de(char *str) {
+    int i;
+    int j;
+    int     result;
+    int     len;
+    char    *base;
 
-	base = "0123456789abcdef";
-	j = 0;
-	i = ft_strlen(str);
-	result = 0;
-	while (i--)
-	{
-		rev_str[j++] = str[i];
-	}
-    rev_str[j - 1] = '\0';
-    i = 0;
-	j = 0;
-	while (rev_str[i])
-	{
-		j = 0;
-		while (base[j])
-		{
-			if (rev_str[i] == base[j])
-				result += j * power(16, i);
-			j++;
-		}
-		i++;
-	}
-	return (result);
+    j = 0;
+    result = 0;
+    base = "0123456789abcdef";
+    len = ft_strlen(str);
+    i = len - 1;
+    while (i >= 0) {
+        j = 0;
+        while (base[j]) {
+            if (str[i] == base[j])
+            {
+                result += j * power(16, len - 1 - i);
+                break;
+            }
+            j++;
+        }
+        i--;
+    }
+
+    return result;
 }
+
+//2a
+
+//i = 1;
+
 
 static int	is_all_digits(char *str)
 {
