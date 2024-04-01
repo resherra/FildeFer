@@ -40,6 +40,8 @@ int	main(int ac, char **av)
     plan->y = 0;
     points = map_parse(av[1], plan);
 
+
+
     //free up memory
     for (int i = 0; i < plan->y; i++)
     {
