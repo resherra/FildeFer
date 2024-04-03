@@ -43,7 +43,7 @@ static int hex_to_de(char *str) {
     while (i >= 0) {
         j = 0;
         while (base[j]) {
-            if (str[i] == base[j])
+            if (str[i] == base[j] || str[i] == base[j] - 32)
             {
                 result += j * power(16, len - 1 - i);
                 break;
@@ -52,7 +52,7 @@ static int hex_to_de(char *str) {
         }
         i--;
     }
-
+    printf("hexa: %s | decimal: %d\n", str, result);
     return result;
 }
 
@@ -80,6 +80,8 @@ static int	is_all_digits(char *str)
 	return (x);
 }
 
+
+
 int	get_color(char *point)
 {
 	int color;
@@ -95,8 +97,7 @@ int	get_color(char *point)
 			color = ft_atoi(color_str + 1);
 		else
 		{
-			fi = ft_strtrim(color_str, ",0x");
-            color = hex_to_de(fi);
+            color = hex_to_de(color_str);
 		}
 	}
 
