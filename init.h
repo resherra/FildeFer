@@ -37,6 +37,12 @@ typedef struct s_map_size
 	int	y;
 }		t_map_size;
 
+typedef struct s_mlx
+{
+    void *mlx_connection;
+    void *mlx_window;
+} t_mlx;
+
 int		get_color(char *point);
 void	cols_rows_count(char *map, t_map_size *plan);
 void	map_dots(char *file, t_map_size *plan, t_pcord ***points);

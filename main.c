@@ -11,7 +11,11 @@
 /* ************************************************************************** */
 
 #include "init.h"
+#include <math.h>
 #include <mlx.h>
+
+#define HEIGHT 1800
+#define WIDTH 1800
 
 void	map_checker(int ac, char *map)
 {
@@ -29,12 +33,42 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-void dda(float x1, float x2, float y1, float y2, void *mlx_window, void *mlx_connection, int color)
+//void  isometric(int x, int y, int z)
+//{
+//    int tmp;
+//
+//    tmp = x;
+//    x = (tmp - y) * cos(0.523599);
+//    y = (tmp + y) * sin(0.523599) - z;
+//
+//    printf("y -> %d\n", y);
+//    printf("x -> %d\n", x);
+//
+//}
+
+void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, int z1)
 {
-    x1 *= 10;
-    y1 *= 10;
-    x2 *= 10;
-    y2 *= 10;
+    x1 *= 40;
+    y1 *= 40;
+    x2 *= 40;
+    y2 *= 40;
+
+    //isometric projection
+    x1 = cos(0.8) * x1 - cost(0.8) * y1;
+    y1 = (x1 + y1) * sin(0.8) - z;
+
+
+    x2 = (x2 - y2) * cos(0.8);
+    y2 = (x2 + y2) * sin(0.8) - z1;
+//    //perspictive
+//    x1 = x1 / z;
+//    y1 = y1 / z;
+//
+//    x2 = x2 / z1;
+//    y2 = y2 / z1;
+
+    x1 += WIDTH / 2;
+    x2 += WIDTH / 2;
     int steps;
     float dx;
     float dy;
@@ -53,12 +87,13 @@ void dda(float x1, float x2, float y1, float y2, void *mlx_window, void *mlx_con
     int i = 0;
     while (i < steps)
     {
-        mlx_pixel_put(mlx_connection, mlx_window, x1, y1, color);
-        //	printf("x -> %.0f | y -> %.0f\n", x1, y1);
+        mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, x1, y1, color);
         x1 += xincre;
         y1 += yincre;
         i++;
     }
+//    mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, x1, y1, color);
+
 }
 
 //main
@@ -66,17 +101,15 @@ int	main(int ac, char **av)
 {
 	t_pcord **points;
 	t_map_size *plan;
-	void *mlx;
-	void *mlx_win;
+	t_mlx mlx;
 
-//	printf("arg -> %s\n", av[1]);
 	map_checker(ac, av[1]);
 	plan = malloc(sizeof(t_map_size));
     plan->x = 0;
     plan->y = 0;
     points = map_parse(av[1], plan);
-    mlx = mlx_init();
-    mlx_win = mlx_new_window(mlx, 1000, 500, "testing");
+    mlx.mlx_connection = mlx_init();
+    mlx.mlx_window = mlx_new_window(mlx.mlx_connection, WIDTH, HEIGHT, "testing");
 
     int i = 0;
     while (i < plan->y)
@@ -84,16 +117,17 @@ int	main(int ac, char **av)
         int j = 0;
         while (j < plan->x)
         {
+//            isometric(j, i, );
             if (j != plan->x - 1)
-                dda(j, j + 1, i, i, mlx_win, mlx, points[i][j].color);
+                dda(j, j + 1, i, i, &mlx, points[i][j].color, points[i][j].z, points[i][j+1].z);
             if (i != plan->y - 1)
-                dda(j, j, i, i + 1, mlx_win, mlx, points[i][j].color);
+                dda(j, j, i, i + 1, &mlx, points[i][j].color,  points[i][j].z, points[i + 1][j].z);
             j++;
         }
         i++;
     }
 
-    mlx_loop(mlx);
+    mlx_loop(mlx.mlx_connection);
     //free up memory
     for (int i = 0; i < plan->y; i++)
     {

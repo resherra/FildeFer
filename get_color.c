@@ -41,6 +41,8 @@ static int hex_to_de(char *str) {
     len = ft_strlen(str);
     i = len - 1;
     while (i >= 0) {
+        if (str[i] == 'x')
+            return result;
         j = 0;
         while (base[j]) {
             if (str[i] == base[j] || str[i] == base[j] - 32)
@@ -52,13 +54,8 @@ static int hex_to_de(char *str) {
         }
         i--;
     }
-    printf("hexa: %s | decimal: %d\n", str, result);
     return result;
 }
-
-//2a
-
-//i = 1;
 
 
 static int	is_all_digits(char *str)
