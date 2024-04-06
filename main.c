@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: recherra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 17:34:46 by recherra          #+#    #+#             */
-/*   Updated: 2024/03/23 17:34:48 by recherra         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:35:27 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	map_checker(int ac, char *map)
 //{
 //    int tmp;
 //
-//    tmp = x;
-//    x = (tmp - y) * cos(0.523599);
-//    y = (tmp + y) * sin(0.523599) - z;
+
 //
 //    printf("y -> %d\n", y);
 //    printf("x -> %d\n", x);
@@ -48,27 +46,48 @@ void	map_checker(int ac, char *map)
 
 void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, int z1)
 {
-    x1 *= 40;
-    y1 *= 40;
-    x2 *= 40;
-    y2 *= 40;
+    int plus = 20;
+    x1 *= plus;
+    y1 *= plus;
+    x2 *= plus;
+    y2 *= plus;
+    z *= plus;
+    z1 *= plus;
 
-    //isometric projection
-    x1 = cos(0.8) * x1 - cost(0.8) * y1;
-    y1 = (x1 + y1) * sin(0.8) - z;
+
+    // int temp_x1 = x1;
+    // int temp_y1 = y1;
+
+    // x1 = (temp_x1 - y1) * cos(0.5);
+    // y1 = (temp_x1 + temp_y1) * sin(0.5) - z;
+
+    // int temp_x2 = x2;
+    // int temp_y2 = y2;
+
+    // x2 = (temp_x2 - y2) * cos(0.4);
+    // y2 = (temp_x2 + temp_y2) * sin(0.4) - z1;
 
 
-    x2 = (x2 - y2) * cos(0.8);
-    y2 = (x2 + y2) * sin(0.8) - z1;
-//    //perspictive
-//    x1 = x1 / z;
-//    y1 = y1 / z;
-//
-//    x2 = x2 / z1;
-//    y2 = y2 / z1;
+// 0.523599
+    int  tmp = x1;
+    x1 = (tmp - y1) * cos(0.7071);
+    y1 = (tmp + y1) * sin(0.7071) - z;
+
+    int  tmp2 = x2;
+    x2 = (tmp2 - y2) * cos(0.7071);
+    y2 = (tmp2 + y2) * sin(0.7071) - z1;
+
+
+    (void)z;
+    (void)z1;
 
     x1 += WIDTH / 2;
     x2 += WIDTH / 2;
+
+    y1 +=  200;
+    y2 +=  200;
+
+
     int steps;
     float dx;
     float dy;
