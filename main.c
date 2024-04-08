@@ -46,7 +46,7 @@ void	map_checker(int ac, char *map)
 
 void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, int z1)
 {
-    int plus = 20;
+    int plus = 3;
     x1 *= plus;
     y1 *= plus;
     x2 *= plus;
@@ -54,28 +54,13 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, i
     z *= plus;
     z1 *= plus;
 
+    float  tmp = x1;
+    x1 = (tmp - y1) * 0.86;
+    y1 = (tmp + y1) * 0.5 - z;
 
-    // int temp_x1 = x1;
-    // int temp_y1 = y1;
-
-    // x1 = (temp_x1 - y1) * cos(0.5);
-    // y1 = (temp_x1 + temp_y1) * sin(0.5) - z;
-
-    // int temp_x2 = x2;
-    // int temp_y2 = y2;
-
-    // x2 = (temp_x2 - y2) * cos(0.4);
-    // y2 = (temp_x2 + temp_y2) * sin(0.4) - z1;
-
-
-// 0.523599
-    int  tmp = x1;
-    x1 = (tmp - y1) * cos(0.7071);
-    y1 = (tmp + y1) * sin(0.7071) - z;
-
-    int  tmp2 = x2;
-    x2 = (tmp2 - y2) * cos(0.7071);
-    y2 = (tmp2 + y2) * sin(0.7071) - z1;
+    float  tmp2 = x2;
+    x2 = (tmp2 - y2) * 0.86;
+    y2 = (tmp2 + y2) * 0.5 - z1;
 
 
     (void)z;
