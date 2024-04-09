@@ -33,44 +33,66 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-//void  isometric(int x, int y, int z)
-//{
-//    int tmp;
-//
+//rotation around z
+t_vector rotate_z(t_vector v) {
+    double cos_theta = cos(M_PI_4);
+    double sin_theta = sin(M_PI_4);
 
-//
-//    printf("y -> %d\n", y);
-//    printf("x -> %d\n", x);
-//
-//}
+    t_vector new_v;
+    new_v.x = cos_theta * v.x - sin_theta * v.y;
+    new_v.y = sin_theta * v.x + cos_theta * v.y;
+    new_v.z = v.z;
 
-void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, int z1)
+    return new_v;
+}
+
+//rotation around x
+t_vector rotate_x(t_vector v) {
+    double cos_theta = cos(atan(sqrt(2)));
+    double sin_theta = sin(atan(sqrt(2)));
+
+    t_vector new_v;
+    new_v.x = v.x;
+    new_v.y = cos_theta * v.y - sin_theta * v.z ;
+    new_v.z = sin_theta * v.y  + cos_theta * v.z;
+
+    return new_v;
+}
+
+
+void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, int z2)
 {
-    int plus = 3;
+    int plus = 20;
     x1 *= plus;
     y1 *= plus;
     x2 *= plus;
     y2 *= plus;
-    z *= plus;
     z1 *= plus;
+    z2 *= plus;
 
-    float  tmp = x1;
-    x1 = (tmp - y1) * 0.86;
-    y1 = (tmp + y1) * 0.5 - z;
+    t_vector point1;
+    t_vector point2;
 
-    float  tmp2 = x2;
-    x2 = (tmp2 - y2) * 0.86;
-    y2 = (tmp2 + y2) * 0.5 - z1;
+    point1.x = x1;
+    point1.y = y1;
+    point1.z = z1;
 
 
-    (void)z;
-    (void)z1;
+    point2.x = x2;
+    point2.y = y2;
+    point2.z = z2;
 
-    x1 += WIDTH / 2;
-    x2 += WIDTH / 2;
+    t_vector rotated_z = rotate_z(point1);
+    t_vector rotated_z2 = rotate_z(point2);
 
-    y1 +=  200;
-    y2 +=  200;
+    t_vector rotated_x = rotate_x(rotated_z);
+    t_vector rotated_x2 = rotate_x(rotated_z2);
+
+    rotated_x.x += WIDTH / 2;
+    rotated_x2.x += WIDTH / 2;
+
+    rotated_x.y +=  200;
+    rotated_x2.y +=  200;
 
 
     int steps;
@@ -79,8 +101,8 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, i
     float xincre;
     float yincre;
 
-    dx = x2 - x1;
-    dy = y2 - y1;
+    dx = rotated_x2.x - rotated_x.x;
+    dy = rotated_x2.y  - rotated_x.y;
     if (dx >= dy)
         steps = dx;
     else
@@ -91,9 +113,10 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z, i
     int i = 0;
     while (i < steps)
     {
-        mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, x1, y1, color);
-        x1 += xincre;
-        y1 += yincre;
+        mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, rotated_x.x, rotated_x.y, color);
+
+        rotated_x.x += xincre;
+        rotated_x.y += yincre;
         i++;
     }
 //    mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, x1, y1, color);

@@ -37,6 +37,12 @@ typedef struct s_map_size
 	int	y;
 }		t_map_size;
 
+typedef struct s_vector {
+    double x;
+    double y;
+    double z;
+} t_vector;
+
 typedef struct s_mlx
 {
     void *mlx_connection;
