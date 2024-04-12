@@ -45,8 +45,8 @@ typedef struct s_vector {
 
 typedef struct s_mlx
 {
-    void *mlx_connection;
-    void *mlx_window;
+    void *connection;
+    void *window;
 } t_mlx;
 
 int		get_color(char *point);

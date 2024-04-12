@@ -14,8 +14,8 @@
 #include <math.h>
 #include <mlx.h>
 
-#define HEIGHT 1800
-#define WIDTH 1800
+#define HEIGHT 1000
+#define WIDTH 1000
 
 void	map_checker(int ac, char *map)
 {
@@ -59,8 +59,27 @@ t_vector rotate_x(t_vector v) {
     return new_v;
 }
 
+typedef struct	s_data {
+    void	*img;
+    char	*addr;
+    int		bits_per_pixel;
+    int		line_length;
+    int		endian;
+}				t_data;
 
-void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, int z2)
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+    char	*dst;
+
+    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
+
+
+
+
+void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, int z2, t_data *img)
 {
     int plus = 20;
     x1 *= plus;
@@ -113,15 +132,20 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, 
     int i = 0;
     while (i < steps)
     {
-        mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, rotated_x.x, rotated_x.y, color);
+
+        my_mlx_pixel_put(img, rotated_x.x, rotated_x.y, color);
+
 
         rotated_x.x += xincre;
         rotated_x.y += yincre;
         i++;
     }
-//    mlx_pixel_put((*mlx).mlx_connection, (*mlx).mlx_window, x1, y1, color);
 
+    (void)mlx;
 }
+
+
+
 
 //main
 int	main(int ac, char **av)
@@ -129,32 +153,37 @@ int	main(int ac, char **av)
 	t_pcord **points;
 	t_map_size *plan;
 	t_mlx mlx;
+    t_data img;
 
 	map_checker(ac, av[1]);
 	plan = malloc(sizeof(t_map_size));
     plan->x = 0;
     plan->y = 0;
     points = map_parse(av[1], plan);
-    mlx.mlx_connection = mlx_init();
-    mlx.mlx_window = mlx_new_window(mlx.mlx_connection, WIDTH, HEIGHT, "testing");
+    mlx.connection = mlx_init();
+    mlx.window = mlx_new_window(mlx.connection, WIDTH, HEIGHT, "testing");
 
+
+    img.img = mlx_new_image(mlx.connection, 1000, 1000);
+
+    img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+                                 &img.endian);
     int i = 0;
     while (i < plan->y)
     {
         int j = 0;
         while (j < plan->x)
         {
-//            isometric(j, i, );
             if (j != plan->x - 1)
-                dda(j, j + 1, i, i, &mlx, points[i][j].color, points[i][j].z, points[i][j+1].z);
+                dda(j, j + 1, i, i, &mlx, points[i][j].color, points[i][j].z, points[i][j+1].z, &img);
             if (i != plan->y - 1)
-                dda(j, j, i, i + 1, &mlx, points[i][j].color,  points[i][j].z, points[i + 1][j].z);
+                dda(j, j, i, i + 1, &mlx, points[i][j].color,  points[i][j].z, points[i + 1][j].z, &img);
             j++;
         }
         i++;
     }
-
-    mlx_loop(mlx.mlx_connection);
+    mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
+    mlx_loop(mlx.connection);
     //free up memory
     for (int i = 0; i < plan->y; i++)
     {
