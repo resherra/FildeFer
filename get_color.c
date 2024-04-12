@@ -12,49 +12,80 @@
 
 #include "init.h"
 
-static int	power(int base, int exp)
+//static int	power(int base, int exp)
+//{
+//	int	i;
+//	int	result;
+//
+//	i = 0;
+//	result = 1;
+//	while (i < exp)
+//	{
+//		result *= base;
+//		i++;
+//	}
+//	return (result);
+//}
+//
+//
+//static int hex_to_de(char *str) {
+//    int i;
+//    int j;
+//    int     result;
+//    int     len;
+//    char    *base;
+//
+//    j = 0;
+//    result = 0;
+//    base = "0123456789abcdef";
+//    len = ft_strlen(str);
+//    i = len - 1;
+//    while (i >= 0) {
+//        if (str[i] == 'x')
+//            return result;
+//        j = 0;
+//        while (base[j]) {
+//            if (str[i] == base[j] || str[i] == base[j] - 32)
+//            {
+//                result += j * power(16, len - 1 - i);
+//                break;
+//            }
+//            j++;
+//        }
+//        i--;
+//    }
+//    return result;
+//}
+
+static int hex_to_de(char *str)
 {
-	int	i;
-	int	result;
+    int i = 0;
+    int number = 0;
 
-	i = 0;
-	result = 1;
-	while (i < exp)
-	{
-		result *= base;
-		i++;
-	}
-	return (result);
-}
-
-
-static int hex_to_de(char *str) {
-    int i;
-    int j;
-    int     result;
-    int     len;
-    char    *base;
-
-    j = 0;
-    result = 0;
-    base = "0123456789abcdef";
-    len = ft_strlen(str);
-    i = len - 1;
-    while (i >= 0) {
-        if (str[i] == 'x')
-            return result;
-        j = 0;
-        while (base[j]) {
-            if (str[i] == base[j] || str[i] == base[j] - 32)
-            {
-                result += j * power(16, len - 1 - i);
-                break;
-            }
-            j++;
-        }
-        i--;
+    while (str[i])
+    {
+        if (str[i] >= 'A' && str[i] <= 'Z')
+            str[i] = str[i] + 32;
+        i++;
     }
-    return result;
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] >= '0' && str[i] <= '9')
+        {
+            number = number * 16;
+            number = number + (str[i] - '0');
+        }
+        else if (str[i] >= 'a' && str[i] <= 'f')
+        {
+            number = number * 16;
+            number = number + 10;
+            number = number + (str[i] - 'a');
+        }
+        i++;
+    }
+
+    return number;
 }
 
 
@@ -83,10 +114,8 @@ int	get_color(char *point)
 {
 	int color;
 	char *color_str;
-	char *fi;
 
 	color_str = ft_strchr(point, ',');
-	fi = NULL;
 	color = 0xffffff;
 	if (color_str)
 	{
@@ -98,6 +127,5 @@ int	get_color(char *point)
 		}
 	}
 
-    free(fi);
 	return (color);
 }

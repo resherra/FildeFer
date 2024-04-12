@@ -20,8 +20,16 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include <math.h>
+#include "mlx.h"
 
 // open, close, read, write, malloc, free, perror, strerror, exit, ft_printf
+
+typedef struct s_map_size
+{
+    int	x;
+    int	y;
+}		t_map_size;
 
 typedef struct s_pcord
 {
@@ -31,11 +39,6 @@ typedef struct s_pcord
 	int	color;
 }		t_pcord;
 
-typedef struct s_map_size
-{
-	int	x;
-	int	y;
-}		t_map_size;
 
 typedef struct s_vector {
     double x;
@@ -49,10 +52,25 @@ typedef struct s_mlx
     void *window;
 } t_mlx;
 
+typedef struct	s_data {
+    void	*img;
+    char	*addr;
+    int		bits_per_pixel;
+    int		line_length;
+    int		endian;
+}				t_data;
+
+
 int		get_color(char *point);
 void	cols_rows_count(char *map, t_map_size *plan);
 void	map_dots(char *file, t_map_size *plan, t_pcord ***points);
 void	mem_allocation(t_map_size *plan, t_pcord ***points);
 t_pcord **map_parse(char *str, t_map_size *plan);
+
+//projection
+t_vector rotate_z(t_vector v);
+t_vector rotate_x(t_vector v);
+t_vector rotate_y(t_vector v, double degrees);
+
 
 #endif

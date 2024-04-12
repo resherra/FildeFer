@@ -11,11 +11,20 @@
 /* ************************************************************************** */
 
 #include "init.h"
-#include <math.h>
-#include <mlx.h>
 
 #define HEIGHT 1800
 #define WIDTH 1800
+
+//int mouse_hook(int keycode, t_mlx *mlx)
+//{
+//    (void)mlx;
+//    if (keycode == 5)
+//    {
+//            write(1, "scroll down\n", 11);
+//    }
+//    return (0);
+//
+//}
 
 void	map_checker(int ac, char *map)
 {
@@ -33,42 +42,9 @@ void	map_checker(int ac, char *map)
 	}
 }
 
-//rotation around z
-t_vector rotate_z(t_vector v) {
-    double cos_theta = cos(M_PI_4);
-    double sin_theta = sin(M_PI_4);
-
-    t_vector new_v;
-    new_v.x = cos_theta * v.x - sin_theta * v.y;
-    new_v.y = sin_theta * v.x + cos_theta * v.y;
-    new_v.z = v.z;
-
-    return new_v;
-}
-
-//rotation around x
-t_vector rotate_x(t_vector v) {
-    double cos_theta = cos(atan(sqrt(2)));
-    double sin_theta = sin(atan(sqrt(2)));
-
-    t_vector new_v;
-    new_v.x = v.x;
-    new_v.y = cos_theta * v.y - sin_theta * v.z ;
-    new_v.z = sin_theta * v.y  + cos_theta * v.z;
-
-    return new_v;
-}
-
-typedef struct	s_data {
-    void	*img;
-    char	*addr;
-    int		bits_per_pixel;
-    int		line_length;
-    int		endian;
-}				t_data;
 
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	custom_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
     char	*dst;
 
@@ -77,12 +53,22 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 
 
-
-
-void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, int z2, t_data *img)
+void projection()
 {
 
-    int plus = 2;
+}
+
+void dda_basic(int x, int y, float x1, float x2, float y1, float y2, int color, int z1, int z2, t_data *img)
+{
+    //zoom
+
+
+    float scale_factor_x = WIDTH / x;
+    float scale_factor_y = HEIGHT / y;
+
+
+    float plus_x = 2;
+    float plus_y = 2;
     x1 *= plus;
     y1 *= plus;
     x2 *= plus;
@@ -90,8 +76,21 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, 
     z1 *= plus;
     z2 *= plus;
 
+
+    float scale_factor_x = WIDTH / x;
+    float scale_factor_y = HEIGHT / y;
+
+    printf("x -> %d\n", x);
+    printf("y -> %d\n", y);
+
+    //projection
     t_vector point1;
     t_vector point2;
+    t_vector rotated_z;
+    t_vector rotated_z2;
+    t_vector rotated_x;
+    t_vector rotated_x2;
+
 
     point1.x = x1;
     point1.y = y1;
@@ -102,19 +101,23 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, 
     point2.y = y2;
     point2.z = z2;
 
-    t_vector rotated_z = rotate_z(point1);
-    t_vector rotated_z2 = rotate_z(point2);
+    rotated_z = rotate_z(point1);
+    rotated_z2 = rotate_z(point2);
 
-    t_vector rotated_x = rotate_x(rotated_z);
-    t_vector rotated_x2 = rotate_x(rotated_z2);
+    rotated_x = rotate_x(rotated_z);
+    rotated_x2 = rotate_x(rotated_z2);
 
+
+
+    //translation
     rotated_x.x += WIDTH / 2;
     rotated_x2.x += WIDTH / 2;
 
-    rotated_x.y +=  200;
-    rotated_x2.y +=  200;
+    rotated_x.y +=  400;
+    rotated_x2.y +=  400;
 
 
+    //drawing
     int steps;
     float dx;
     float dy;
@@ -133,19 +136,23 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, 
     int i = 0;
     while (i < steps)
     {
-
-//        mlx_pixel_put((*mlx).connection, (*mlx).window, rotated_x.x, rotated_x.y, color);
-        my_mlx_pixel_put(img, rotated_x.x, rotated_x.y, color);
+        custom_mlx_pixel_put(img, rotated_x.x, rotated_x.y, color);
         rotated_x.x += xincre;
         rotated_x.y += yincre;
         i++;
     }
-
-    (void)mlx;
 }
 
 
-
+int	key_hook(int keycode, t_mlx *mlx)
+{
+    if(keycode == 53)
+    {
+        mlx_destroy_window(mlx->window, mlx->window);
+        exit(0);
+    }
+    return (0);
+}
 
 //main
 int	main(int ac, char **av)
@@ -167,7 +174,7 @@ int	main(int ac, char **av)
     img.img = mlx_new_image(mlx.connection, HEIGHT, WIDTH);
 
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-                                 &img.endian);
+            &img.endian);
 
     int i = 0;
     while (i < plan->y)
@@ -176,9 +183,9 @@ int	main(int ac, char **av)
         while (j < plan->x)
         {
             if (j != plan->x - 1)
-                dda(j, j + 1, i, i, &mlx, points[i][j].color, points[i][j].z, points[i][j+1].z, &img);
+                dda_basic(plan->x, plan->y, j, j + 1, i, i, points[i][j].color, points[i][j].z, points[i][j+1].z, &img);
             if (i != plan->y - 1)
-                dda(j, j, i, i + 1, &mlx, points[i][j].color,  points[i][j].z, points[i + 1][j].z, &img);
+                dda_basic(plan->x, plan->y, j, j, i, i + 1, points[i][j].color,  points[i][j].z, points[i + 1][j].z, &img);
             j++;
         }
         i++;
@@ -187,13 +194,17 @@ int	main(int ac, char **av)
 
     mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
 
+    mlx_key_hook(mlx.window, key_hook, &mlx);
+//    mlx_mouse_hook(mlx.window, mouse_hook, &mlx);
+
+
     mlx_loop(mlx.connection);
-    //free up memory
+//    free up memory
     for (int i = 0; i < plan->y; i++)
     {
         free(points[i]);
     }
     free(points);
     free(plan);
-//	system("leaks -q a.out");
+	system("leaks -q a.out");
 }
