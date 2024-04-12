@@ -14,8 +14,8 @@
 #include <math.h>
 #include <mlx.h>
 
-#define HEIGHT 1000
-#define WIDTH 1000
+#define HEIGHT 1800
+#define WIDTH 1800
 
 void	map_checker(int ac, char *map)
 {
@@ -81,7 +81,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, int z2, t_data *img)
 {
-    int plus = 20;
+
+    int plus = 2;
     x1 *= plus;
     y1 *= plus;
     x2 *= plus;
@@ -133,9 +134,8 @@ void dda(float x1, float x2, float y1, float y2, t_mlx *mlx, int color, int z1, 
     while (i < steps)
     {
 
+//        mlx_pixel_put((*mlx).connection, (*mlx).window, rotated_x.x, rotated_x.y, color);
         my_mlx_pixel_put(img, rotated_x.x, rotated_x.y, color);
-
-
         rotated_x.x += xincre;
         rotated_x.y += yincre;
         i++;
@@ -164,10 +164,11 @@ int	main(int ac, char **av)
     mlx.window = mlx_new_window(mlx.connection, WIDTH, HEIGHT, "testing");
 
 
-    img.img = mlx_new_image(mlx.connection, 1000, 1000);
+    img.img = mlx_new_image(mlx.connection, HEIGHT, WIDTH);
 
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
                                  &img.endian);
+
     int i = 0;
     while (i < plan->y)
     {
@@ -182,7 +183,10 @@ int	main(int ac, char **av)
         }
         i++;
     }
+
+
     mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
+
     mlx_loop(mlx.connection);
     //free up memory
     for (int i = 0; i < plan->y; i++)
