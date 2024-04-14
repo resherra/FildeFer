@@ -41,9 +41,9 @@ typedef struct s_pcord
 
 
 typedef struct s_vector {
-    double x;
-    double y;
-    double z;
+    float x;
+    float y;
+    float z;
 } t_vector;
 
 typedef struct s_mlx
@@ -68,8 +68,8 @@ void	mem_allocation(t_map_size *plan, t_pcord ***points);
 t_pcord **map_parse(char *str, t_map_size *plan);
 
 //projection
-t_vector rotate_z(t_vector v);
-t_vector rotate_x(t_vector v);
+void rotate_z(int *x, int *y, int  *z);
+void rotate_x(int *x, int *y, int  *z);
 t_vector rotate_y(t_vector v, double degrees);
 
 
