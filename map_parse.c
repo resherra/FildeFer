@@ -12,25 +12,7 @@
 
 #include "init.h"
 
-void	print(t_pcord **points, t_map_size *plan)
-{
-    int	i;
-    int	j;
 
-    i = 0;
-    j = 0;
-    while (i < plan->y)
-    {
-        j = 0;
-        while (j < plan->x)
-        {
-            printf("%3d", points[i][j].z);
-            j++;
-        }
-        printf("\n");
-        i++;
-    }
-}
 
 t_pcord **map_parse(char *str, t_map_size *plan)
 {
@@ -39,6 +21,5 @@ t_pcord **map_parse(char *str, t_map_size *plan)
     cols_rows_count(str, plan);
     mem_allocation(plan, &points);
     map_dots(str, plan, &points);
-//    print(points, plan);
     return points;
 }

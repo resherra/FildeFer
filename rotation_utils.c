@@ -14,25 +14,26 @@
 #include "init.h"
 
 
-void rotate_z(int *x, int *y, int *z)
+void rotate_z(float *x, float *y, float *z)
 {
     float cos_theta = cos(M_PI_4);
     float sin_theta = sin(M_PI_4);
 
     //i should create tmp variables
-    int tmp = *x;
+    float tmp = *x;
     *x = cos_theta * *x - sin_theta * *y;
     *y = sin_theta * tmp + cos_theta * *y;
     *z = *z;
 }
 
 //rotation around x
-void rotate_x(int *x, int *y, int *z)
+void rotate_x(float *x, float *y, float *z)
 {
     float cos_theta = cos(atan(sqrt(2)));
     float sin_theta = sin(atan(sqrt(2)));
 
-    int tmp = *y;
+
+    float tmp = *y;
     *x = *x;
     *y = cos_theta * *y - sin_theta * *z;
     *z = sin_theta * tmp  + cos_theta * *z;

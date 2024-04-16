@@ -29,13 +29,22 @@ typedef struct s_map_size
 {
     int	x;
     int	y;
+    float max_x;
+    float min_x;
+    float max_y;
+    float min_y;
+    float bounding_w;
+    float bounding_h;
+    float offset_x;
+    float offset_y;
+    float scale_f;
 }		t_map_size;
 
 typedef struct s_pcord
 {
-	int	x;
-	int	y;
-	int	z;
+	float	x;
+	float	y;
+	float	z;
 	int	color;
 }		t_pcord;
 
@@ -50,6 +59,8 @@ typedef struct s_mlx
 {
     void *connection;
     void *window;
+    double height;
+    double width;
 } t_mlx;
 
 typedef struct	s_data {
@@ -68,8 +79,8 @@ void	mem_allocation(t_map_size *plan, t_pcord ***points);
 t_pcord **map_parse(char *str, t_map_size *plan);
 
 //projection
-void rotate_z(int *x, int *y, int  *z);
-void rotate_x(int *x, int *y, int  *z);
+void rotate_z(float *x, float *y, float  *z);
+void rotate_x(float *x, float *y, float  *z);
 t_vector rotate_y(t_vector v, double degrees);
 
 

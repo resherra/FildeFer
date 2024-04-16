@@ -32,35 +32,30 @@ static int	rows_count(char *line)
 void	cols_rows_count(char *map, t_map_size *plan)
 {
 	int		fd;
-    int first_row;
-    char	*str;
+	int		first_row;
+	char	*str;
 
-
-
-    first_row = 0;
-	str = NULL;
+	first_row = 0;
 	fd = open(map, O_RDONLY);
 	if (fd == -1)
 		exit(1);
 	while ((str = get_next_line(fd)))
 	{
-		//to calculate the rows only for the first time
-        plan->x = rows_count(str);
-        if (plan->y == 0)
-        {
-            first_row = plan->x;
-        }
-        if (plan->x != first_row)
-        {
-            //free here!
+		plan->x = rows_count(str);
+		if (plan->y == 0)
+		{
+			first_row = plan->x;
+		}
+		if (plan->x != first_row)
+		{
             free(str);
-            free(plan);
-            printf("the map is not rectangle\n");
-            exit(1);
-        }
+			free(plan);
+			printf("the map is not rectangle\n");
+			exit(1);
+		}
 		plan->y++;
 		free(str);
-    }
+	}
 	close(fd);
 }
 
@@ -80,23 +75,23 @@ void	mem_allocation(t_map_size *plan, t_pcord ***points)
 		(*points)[i] = malloc(plan->x * sizeof(t_pcord));
 		if ((*points)[i] == NULL)
 		{
-            while (i--)
-                free((*points)[i]);
-            free(*points);
-            free(plan);
-            exit(1);
-        }
+			while (i--)
+				free((*points)[i]);
+			free(*points);
+			free(plan);
+			exit(1);
+		}
 		i++;
 	}
 }
 
 void	map_dots(char *file, t_map_size *plan, t_pcord ***points)
 {
-	char **dots;
-	char *str;
-	int fd;
-	int i;
-	int j;
+	char	**dots;
+	char	*str;
+	int		fd;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -110,7 +105,6 @@ void	map_dots(char *file, t_map_size *plan, t_pcord ***points)
 		&& j < plan->y)
 	{
 		i = 0;
-
 		while (dots[i])
 		{
 			(*points)[j][i].x = i;
