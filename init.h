@@ -73,10 +73,11 @@ typedef struct	s_data {
 
 
 int		get_color(char *point);
-void	cols_rows_count(char *map, t_map_size *plan);
+void	cols_rows_count(int fd, t_map_size *plan);
 void	map_dots(char *file, t_map_size *plan, t_pcord ***points);
 void	mem_allocation(t_map_size *plan, t_pcord ***points);
 t_pcord **map_parse(char *str, t_map_size *plan);
+int	ft_open(char *str);
 
 //projection
 void rotate_z(float *x, float *y, float  *z);

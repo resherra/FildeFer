@@ -113,8 +113,8 @@ void	dda(t_pcord point1, t_pcord point2, t_map_size *plan, t_data *img)
 	point2.x *= plus;
 	point2.y *= plus;
 
-    float offset = 50;
-    float offset_y = 50;
+    float offset = 0;
+    float offset_y = 0;
 
 
 	if (plan->min_x < 0)

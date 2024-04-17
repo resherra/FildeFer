@@ -12,14 +12,27 @@
 
 #include "init.h"
 
-
-
-t_pcord **map_parse(char *str, t_map_size *plan)
+int	ft_open(char *str)
 {
-    t_pcord **points;
+	int	fd;
 
-    cols_rows_count(str, plan);
-    mem_allocation(plan, &points);
-    map_dots(str, plan, &points);
-    return points;
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+	{
+		printf("can't open the file");
+		exit(1);
+	}
+	return (fd);
+}
+
+t_pcord	**map_parse(char *str, t_map_size *plan)
+{
+	int		fd;
+	t_pcord	**points;
+
+	fd = ft_open(str);
+	cols_rows_count(fd, plan);
+	mem_allocation(plan, &points);
+	map_dots(str, plan, &points);
+	return (points);
 }
