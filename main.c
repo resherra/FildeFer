@@ -53,5 +53,6 @@ int	main(int ac, char **av)
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
 	mlx_key_hook(mlx.window, key_hook, &mlx);
 	mlx_loop(mlx.connection);
+	printf("jack");
 	end_free(points, plan);
 }

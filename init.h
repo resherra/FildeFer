@@ -14,7 +14,7 @@
 # define INIT_H
 
 # include "mlx.h"
-# include "get_next_line.h"
+# include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <math.h>
@@ -44,13 +44,6 @@ typedef struct s_pcord
 	float	z;
 	int		color;
 }			t_pcord;
-
-typedef struct s_vector
-{
-	float	x;
-	float	y;
-	float	z;
-}			t_vector;
 
 typedef struct s_mlx
 {
