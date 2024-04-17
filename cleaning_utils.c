@@ -1,40 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parse.c                                        :+:      :+:    :+:   */
+/*   cleaning_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 22:32:40 by recherra          #+#    #+#             */
-/*   Updated: 2024/03/31 22:55:51 by recherra         ###   ########.fr       */
+/*   Created: 2024/04/17 20:07:12 by recherra          #+#    #+#             */
+/*   Updated: 2024/04/17 20:07:13 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "init.h"
 
-int	ft_open(char *str)
+void	end_free(t_pcord **points, t_map_size *plan)
 {
-	int	fd;
+	int	i;
 
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
+	i = 0;
+	while (i < plan->y)
 	{
-		printf("can't open the file");
-		exit(1);
+		free(points[i]);
+		i++;
 	}
-	return (fd);
-}
-
-t_pcord	**map_parse(char *str, t_map_size *plan)
-{
-	int		fd;
-	t_pcord	**points;
-
-	plan->x = 0;
-	plan->y = 0;
-	fd = ft_open(str);
-	cols_rows_count(fd, plan);
-	mem_allocation(plan, &points);
-	map_dots(str, plan, &points);
-	return (points);
+	free(points);
+	free(plan);
 }

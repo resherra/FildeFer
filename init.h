@@ -13,76 +13,86 @@
 #ifndef INIT_H
 # define INIT_H
 
+# include "mlx.h"
 # include "get_next_line.h"
 # include "libft/libft.h"
 # include <fcntl.h>
+# include <math.h>
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-#include <math.h>
-#include "mlx.h"
-
-// open, close, read, write, malloc, free, perror, strerror, exit, ft_printf
+# define WIDTH 1300
+# define HEIGHT 1300
 
 typedef struct s_map_size
 {
-    int	x;
-    int	y;
-    float max_x;
-    float min_x;
-    float max_y;
-    float min_y;
-    float bounding_w;
-    float bounding_h;
-    float offset_x;
-    float offset_y;
-    float scale_f;
-}		t_map_size;
+	int		x;
+	int		y;
+	float	max_x;
+	float	min_x;
+	float	max_y;
+	float	min_y;
+	float	bounding_w;
+	float	bounding_h;
+	float	scale_f;
+	float	offset_x;
+	float	offset_y;
+}			t_map_size;
 
 typedef struct s_pcord
 {
 	float	x;
 	float	y;
 	float	z;
-	int	color;
-}		t_pcord;
+	int		color;
+}			t_pcord;
 
-
-typedef struct s_vector {
-    float x;
-    float y;
-    float z;
-} t_vector;
+typedef struct s_vector
+{
+	float	x;
+	float	y;
+	float	z;
+}			t_vector;
 
 typedef struct s_mlx
 {
-    void *connection;
-    void *window;
-    double height;
-    double width;
-} t_mlx;
+	void	*connection;
+	void	*window;
+}			t_mlx;
 
-typedef struct	s_data {
-    void	*img;
-    char	*addr;
-    int		bits_per_pixel;
-    int		line_length;
-    int		endian;
-}				t_data;
+typedef struct s_data
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_data;
 
+typedef struct s_dda
+{
+	int		steps;
+	float	dx;
+	float	dy;
+	float	x_factor;
+	float	y_factor;
+}			t_dda;
 
-int		get_color(char *point);
-void	cols_rows_count(int fd, t_map_size *plan);
-void	map_dots(char *file, t_map_size *plan, t_pcord ***points);
-void	mem_allocation(t_map_size *plan, t_pcord ***points);
-t_pcord **map_parse(char *str, t_map_size *plan);
-int	ft_open(char *str);
+void		cols_rows_count(int fd, t_map_size *plan);
+int			get_color(char *point);
+void		map_dots(char *file, t_map_size *plan, t_pcord ***points);
+void		mem_allocation(t_map_size *plan, t_pcord ***points);
+t_pcord		**map_parse(char *str, t_map_size *plan);
+void		map_checker(int ac, char *map);
+int			ft_open(char *str);
+void		projection(t_pcord ***points, t_map_size *plan);
+void		translate(t_pcord *point1, t_pcord *point2, t_map_size *plan);
+void		scale(t_pcord *point1, t_pcord *point2, t_map_size *plan);
+void		draw(t_pcord **points, t_map_size *plan, t_data *img);
+void		custom_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		end_free(t_pcord **points, t_map_size *plan);
+void		factor(t_map_size *plan);
 
-//projection
-void rotate_z(float *x, float *y, float  *z);
-void rotate_x(float *x, float *y, float  *z);
-t_vector rotate_y(t_vector v, double degrees);
-
+//rotation
+void		rotate_z(float *x, float *y, float *z);
+void		rotate_x(float *x, float *y, float *z);
 
 #endif
