@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "../init.h"
 
 void	scale(t_pcord *point1, t_pcord *point2, t_map_size *plan)
 {
@@ -22,14 +22,8 @@ void	scale(t_pcord *point1, t_pcord *point2, t_map_size *plan)
 
 void	translate(t_pcord *point1, t_pcord *point2, t_map_size *plan)
 {
-	plan->offset_x = 0;
-	plan->offset_y = 0;
-	if (plan->min_x < 0)
-		plan->offset_x += (0 - plan->min_x) * plan->scale_f;
-	if (plan->min_y < 0)
-		plan->offset_y += (0 - plan->min_y) * plan->scale_f;
-	point1->x += plan->offset_x;
-	point2->x += plan->offset_x;
+    point1->x += plan->offset_x;
+    point2->x += plan->offset_x;
 	point1->y += plan->offset_y;
 	point2->y += plan->offset_y;
 }
@@ -45,4 +39,20 @@ void	factor(t_map_size *plan)
 		plan->scale_f = width / plan->bounding_w;
 	else
 		plan->scale_f = width / plan->bounding_h;
+
+	//scaling
+	plan->min_x *= plan->scale_f;
+	plan->min_y *= plan->scale_f;
+    plan->max_x *= plan->scale_f;
+    plan->max_y *= plan->scale_f;
+
+    plan->offset_x = 0;
+    plan->offset_y = 0;
+    if (plan->min_x < 0)
+        plan->offset_x += fabs(plan->min_x);
+    if (plan->min_y < 0)
+        plan->offset_y += fabs(plan->min_y);
+
+    plan->offset_x += (WIDTH - plan->max_x - plan->offset_x) / 2;
+    plan->offset_y += (HEIGHT - plan->max_y - plan->offset_y) / 2;
 }

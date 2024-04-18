@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "../init.h"
 
 static void	dda(t_pcord point1, t_pcord point2, t_map_size *plan, t_data *img)
 {

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checking_utils.c                                   :+:      :+:    :+:   */
+/*   cleaning_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 17:01:22 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/17 17:01:23 by recherra         ###   ########.fr       */
+/*   Created: 2024/04/17 20:07:12 by recherra          #+#    #+#             */
+/*   Updated: 2024/04/17 20:07:13 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
+#include "../init.h"
 
-void	map_checker(int ac, char *map)
+void	end_free(t_pcord **points, t_map_size *plan)
 {
-	if (ac != 2)
+	int	i;
+
+	i = 0;
+	while (i < plan->y)
 	{
-		printf("more/less arguments");
-		exit(1);
+		free(points[i]);
+		i++;
 	}
-	if (ft_strlen(map) <= 4 || !ft_strnstr(map, ".fdf", ft_strlen(map)))
-	{
-		printf("invalid file");
-		exit(1);
-	}
+	free(points);
+	free(plan);
 }
