@@ -24,7 +24,7 @@ int	key_hook(int keycode, t_mlx *mlx)
 {
 	if (keycode == 53)
 	{
-		mlx_destroy_window(mlx->window, mlx->window);
+		mlx_destroy_window(mlx->connection, mlx->window);
 		exit(0);
 	}
 	return (0);
@@ -53,6 +53,4 @@ int	main(int ac, char **av)
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
 	mlx_key_hook(mlx.window, key_hook, &mlx);
 	mlx_loop(mlx.connection);
-	printf("jack");
-	end_free(points, plan);
 }

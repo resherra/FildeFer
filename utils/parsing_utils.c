@@ -40,20 +40,16 @@ void	cols_rows_count(int fd, t_map_size *plan)
 	{
 		plan->x = rows_count(str);
 		if (plan->y == 0)
-		{
 			first_row = plan->x;
-		}
 		if (plan->x != first_row)
-		{
-			free(str);
-			free(plan);
-			printf("the map is not rectangle\n");
+        {
+		    printf("the map is not rectangle\n");
 			exit(1);
 		}
+        free(str);
+        str = get_next_line(fd);
 		plan->y++;
-		free(str);
-		str = get_next_line(fd);
-	}
+    }
 	close(fd);
 }
 
@@ -64,21 +60,12 @@ void	mem_allocation(t_map_size *plan, t_pcord ***points)
 	i = 0;
 	*points = malloc(plan->y * sizeof(t_pcord *));
 	if (*points == NULL)
-	{
-		printf("allocation problem");
 		exit(1);
-	}
 	while (i < plan->y)
 	{
 		(*points)[i] = malloc(plan->x * sizeof(t_pcord));
 		if ((*points)[i] == NULL)
-		{
-			while (i--)
-				free((*points)[i]);
-			free(*points);
-			free(plan);
 			exit(1);
-		}
 		i++;
 	}
 }

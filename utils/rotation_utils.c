@@ -23,7 +23,7 @@ void	rotate_z(float *x, float *y, float *z)
 	tmp = *x;
 	*x = cos_theta * *x - sin_theta * *y;
 	*y = sin_theta * tmp + cos_theta * *y;
-	*z = *z;
+    (void)*z;
 }
 
 void	rotate_x(float *x, float *y, float *z)
@@ -35,7 +35,7 @@ void	rotate_x(float *x, float *y, float *z)
 	cos_theta = cos(atan(sqrt(2)));
 	sin_theta = sin(atan(sqrt(2)));
 	tmp = *y;
-	*x = *x;
+    (void)*x;
 	*y = cos_theta * *y - sin_theta * *z;
 	*z = sin_theta * tmp + cos_theta * *z;
 }

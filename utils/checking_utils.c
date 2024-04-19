@@ -14,14 +14,18 @@
 
 void	map_checker(int ac, char *map)
 {
-	if (ac != 2)
+    int len;
+
+    if (ac != 2)
 	{
 		printf("more/less arguments");
-		exit(1);
+        exit(1);
+
 	}
-	if (ft_strlen(map) <= 4 || !ft_strnstr(map, ".fdf", ft_strlen(map)))
+    len = ft_strlen(map);
+    if (!ft_strnstr(map + (len - 4), ".fdf", 4))
 	{
-		printf("invalid file");
+        printf("invalid file");
 		exit(1);
 	}
 }

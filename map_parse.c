@@ -19,7 +19,7 @@ int	ft_open(char *str)
 	fd = open(str, O_RDONLY);
 	if (fd == -1)
 	{
-		printf("can't open the file");
+		perror("Fil de Fer");
 		exit(1);
 	}
 	return (fd);

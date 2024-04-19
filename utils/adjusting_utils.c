@@ -32,15 +32,13 @@ void	factor(t_map_size *plan)
 {
 	int	width;
 
-	plan->bounding_w = plan->max_x - plan->min_x;
+    width = 1100;
+    plan->bounding_w = plan->max_x - plan->min_x;
 	plan->bounding_h = plan->max_y - plan->min_y;
-	width = 1100;
 	if (width / plan->bounding_w < width / plan->bounding_h)
 		plan->scale_f = width / plan->bounding_w;
 	else
 		plan->scale_f = width / plan->bounding_h;
-
-	//scaling
 	plan->min_x *= plan->scale_f;
 	plan->min_y *= plan->scale_f;
     plan->max_x *= plan->scale_f;
