@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utis.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: recherra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 00:21:25 by recherra          #+#    #+#             */
 /*   Updated: 2024/03/30 00:21:27 by recherra         ###   ########.fr       */
@@ -43,7 +43,7 @@ void	cols_rows_count(int fd, t_map_size *plan)
 			first_row = plan->x;
 		if (plan->x != first_row)
         {
-		    printf("the map is not rectangle\n");
+		    ft_putstr("the map is not rectangle\n");
 			exit(1);
 		}
         free(str);

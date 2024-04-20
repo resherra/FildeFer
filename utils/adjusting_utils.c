@@ -32,7 +32,7 @@ void	factor(t_map_size *plan)
 {
 	int	width;
 
-    width = 1100;
+    width = WIDTH - 100;
     plan->bounding_w = plan->max_x - plan->min_x;
 	plan->bounding_h = plan->max_y - plan->min_y;
 	if (width / plan->bounding_w < width / plan->bounding_h)

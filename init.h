@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: recherra <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 17:37:42 by recherra          #+#    #+#             */
 /*   Updated: 2024/03/23 17:37:46 by recherra         ###   ########.fr       */
@@ -14,13 +14,13 @@
 # define INIT_H
 
 # include "mlx.h"
-# include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
+# include "get_next_line/get_next_line.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
-# define WIDTH 1300
-# define HEIGHT 1300
+    # define WIDTH 1000
+# define HEIGHT 1000
 
 typedef struct s_map_size
 {
@@ -83,6 +83,7 @@ void		draw(t_pcord **points, t_map_size *plan, t_data *img);
 void		custom_mlx_pixel_put(t_data *data, int x, int y, int color);
 void		end_free(t_pcord **points, t_map_size *plan);
 void		factor(t_map_size *plan);
+void ft_putstr(char *s);
 
 //rotation
 void		rotate_z(float *x, float *y, float *z);

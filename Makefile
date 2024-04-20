@@ -3,30 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: recherra <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: recherra <recherra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/23 17:11:45 by recherra          #+#    #+#              #
 #    Updated: 2024/03/23 17:11:47 by recherra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = get_color.c parsing_utils.c get_next_line.c get_next_line_utils.c main.c
-DEPEND = libft.a
+#macos
+#FRAEMWORKS=-framework OpenGL -framework AppKit
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+#linux
+FRAEMWORKS=-lXext -lX11 -lm -lz
 
-OBJ = ${SRC:.c=.o}
-NAME = testing.a
+FLAGS=-Wall -Wextra -Werror
+SRC=main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c utils/adjusting_utils.c utils/checking_utils.c utils/drawing_utils.c utils/parsing_utils.c utils/projection_utils.c utils/rotation_utils.c utils/get_color.c utils/map_parse.c
+#linux
+INCLUDES=libft/libft.a libmlx_Linux.a
+NAME=fdf
 
-all: ${NAME}
-
-${NAME}: ${OBJ}
-	ar -rcs ${NAME} ${DEPEND} ${OBJ}
+all:
+	@make -C libft/ all
+	cc $(SRC) -o $(NAME) $(FLAGS) $(INCLUDES) $(FRAEMWORKS)
 
 clean:
-		rm -rf ${OBJ} ${OBONUS}
+	@make -C libft/ clean
+
 fclean: clean
-	rm -rf ${NAME}
-	
+	rm $(NAME)
+	@make -C libft/ fclean
+
 re: fclean all

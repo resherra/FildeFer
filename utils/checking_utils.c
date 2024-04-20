@@ -12,20 +12,32 @@
 
 #include "../init.h"
 
+void ft_putstr(char *s)
+{
+    int	i;
+
+    i = 0;
+    while (s[i])
+    {
+        write(1, &s[i], 1);
+        i++;
+    }
+}
+
 void	map_checker(int ac, char *map)
 {
     int len;
 
     if (ac != 2)
 	{
-		printf("more/less arguments");
+        ft_putstr("more/less arguments\n");
         exit(1);
 
 	}
     len = ft_strlen(map);
     if (!ft_strnstr(map + (len - 4), ".fdf", 4))
 	{
-        printf("invalid file");
+        ft_putstr("invalid file\n");
 		exit(1);
 	}
 }
