@@ -42,10 +42,7 @@ void	cols_rows_count(int fd, t_map_size *plan)
 		if (plan->y == 0)
 			first_row = plan->x;
 		if (plan->x != first_row)
-        {
-		    ft_putstr("the map is not rectangle\n");
-			exit(1);
-		}
+            print_error("Fil de Fer: the map columns are not equal.\n");
         free(str);
         str = get_next_line(fd);
 		plan->y++;

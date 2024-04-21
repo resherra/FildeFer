@@ -29,15 +29,8 @@ void	map_checker(int ac, char *map)
     int len;
 
     if (ac != 2)
-	{
-        ft_putstr("more/less arguments\n");
-        exit(1);
-
-	}
+        print_error("Fil de Fer: more/less arguments.\n");
     len = ft_strlen(map);
     if (!ft_strnstr(map + (len - 4), ".fdf", 4))
-	{
-        ft_putstr("invalid file\n");
-		exit(1);
-	}
+        print_error("Fil de Fer: Invalid file type.\n");
 }

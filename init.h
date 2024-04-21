@@ -84,7 +84,7 @@ void		custom_mlx_pixel_put(t_data *data, int x, int y, int color);
 void		end_free(t_pcord **points, t_map_size *plan);
 void		factor(t_map_size *plan);
 void ft_putstr(char *s);
-
+void print_error(char *str);
 //rotation
 void		rotate_z(float *x, float *y, float *z);
 void		rotate_x(float *x, float *y, float *z);

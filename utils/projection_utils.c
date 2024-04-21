@@ -32,9 +32,9 @@ void	projection(t_pcord ***points, t_map_size *plan)
 	i = 0;
 	j = 0;
     plan->max_x = (*points)[i][j].x;
-	plan->min_x = (*points)[i][j].x;
-	plan->max_y = (*points)[i][j].y;
-	plan->min_y = (*points)[i][j].y;
+    plan->min_x = (*points)[i][j].x;
+    plan->max_y = (*points)[i][j].y;
+    plan->min_y = (*points)[i][j].y;
 	while (i < plan->y)
 	{
 		j = 0;
