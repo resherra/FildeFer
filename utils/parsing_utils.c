@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "../init_bonus.h"
 
 static int	rows_count(char *line)
 {

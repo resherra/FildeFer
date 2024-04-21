@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "../init_bonus.h"
 
 static void	get_res(float x, float y, t_map_size *plan)
 {
@@ -24,7 +24,7 @@ static void	get_res(float x, float y, t_map_size *plan)
 		plan->min_y = y;
 }
 
-void	projection(t_pcord ***points, t_map_size *plan)
+void	projection(t_pcord ***points, t_map_size *plan, t_degree rotation_degree)
 {
 	int	i;
 	int	j;
@@ -40,10 +40,22 @@ void	projection(t_pcord ***points, t_map_size *plan)
 		j = 0;
 		while (j < plan->x)
 		{
-			rotate_z(&(*points)[i][j].x, &(*points)[i][j].y,
-					&(*points)[i][j].z);
-			rotate_x(&(*points)[i][j].x, &(*points)[i][j].y,
-					&(*points)[i][j].z);
+            if (rotation_degree.axis == 'i' || rotation_degree.axis == 'z')
+            {
+                rotate_z(&(*points)[i][j].x, &(*points)[i][j].y,
+                         &(*points)[i][j].z,rotation_degree.z_degree);
+            }
+            if (rotation_degree.axis == 'i' || rotation_degree.axis == 'x')
+            {
+                rotate_x(&(*points)[i][j].x, &(*points)[i][j].y,
+                         &(*points)[i][j].z, rotation_degree.x_degree);
+            }
+            if (rotation_degree.axis == 'y')
+            {
+                rotate_y(&(*points)[i][j].x, &(*points)[i][j].y,
+                         &(*points)[i][j].z, rotation_degree.y_degree);
+            }
+
 			get_res((*points)[i][j].x, (*points)[i][j].y, plan);
 			j++;
 		}

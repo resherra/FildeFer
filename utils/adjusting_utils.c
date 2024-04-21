@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "../init_bonus.h"
 
 void	scale(t_pcord *point1, t_pcord *point2, t_map_size *plan)
 {
