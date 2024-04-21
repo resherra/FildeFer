@@ -35,6 +35,6 @@ t_pcord	**map_parse(char *str, t_map_size *plan)
 	fd = ft_open(str);
 	cols_rows_count(fd, plan);
 	mem_allocation(plan, &points);
-	map_dots(str, plan, &points);
+	map_dots(str, plan, points);
 	return (points);
 }

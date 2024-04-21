@@ -30,73 +30,64 @@ void rebuild(t_bonus *testing)
 }
 
 
+
+
 //linux
 int	key_hook(int keycode, t_bonus *testing)
 {
+    rebuild(testing);
 	if (keycode == XK_Escape)
 	{
         mlx_destroy_window(testing->mlx.connection, testing->mlx.window);
         exit(0);
 	}
     if (keycode == XK_Right)
-    {
-        rebuild(testing);
         testing->calcs->offset_x += 20;
-
-    }
     if (keycode == XK_Left)
-    {
-        rebuild(testing);
         testing->calcs->offset_x -= 20;
-    }
     if (keycode == XK_Up)
-    {
-        rebuild(testing);
         testing->calcs->offset_y -= 20;
-    }
     if (keycode == XK_Down)
-    {
-        rebuild(testing);
         testing->calcs->offset_y += 20;
-    }
     if (keycode == 102) //f
-    {
-       rebuild(testing);
        testing->calcs->scale_f += 1.5;
-    }
     if (keycode == 103) //g
     {
         if (testing->calcs->scale_f - 1.5 < 0)
             return 0;
-        rebuild(testing);
         testing->calcs->scale_f -= 1.5;
     }
     if (keycode == 120) //x
     {
-        rebuild(testing);
-        testing->degrees.x_degree = 10;
+//        rebuild(testing);
+        testing->degrees.x_degree = 10.00;
         testing->degrees.axis = 'x';
-        projection(&testing->points, testing->calcs, testing->degrees);
+        projection(testing->points, testing->calcs, testing->degrees);
     }
     if (keycode == 122) //z
     {
-        rebuild(testing);
-        testing->degrees.z_degree = 10;
+//        rebuild(testing);
+        testing->degrees.z_degree = 10.00;
         testing->degrees.axis = 'z';
-        projection(&testing->points, testing->calcs, testing->degrees);
+        projection(testing->points, testing->calcs, testing->degrees);
     }
     if (keycode == 121) //y
     {
-        rebuild(testing);
-        testing->degrees.y_degree = 10;
+//        rebuild(testing);
+        testing->degrees.y_degree = 10.00;
         testing->degrees.axis = 'y';
-        projection(&testing->points, testing->calcs, testing->degrees);
+        projection(testing->points, testing->calcs, testing->degrees);
     }
     draw(testing->points, testing->calcs, &testing->img);
     mlx_put_image_to_window(testing->mlx.connection, testing->mlx.window, testing->img.img, 0, 0);
 	return (0);
 }
 
+int close_btn(t_mlx *mlx)
+{
+    mlx_destroy_window(mlx->connection, mlx->window);
+    exit(0);
+}
 
 //macos
 //int	key_hook(int keycode, t_mlx *mlx)
@@ -136,10 +127,10 @@ int	main(int ac, char **av)
         print_error("Fil de Fer: Empty file.\n");
     }
     rotation_degree.z_degree = 45;
-    rotation_degree.x_degree = 54.7356103;
+    rotation_degree.x_degree = 35.264;
     rotation_degree.y_degree = 0;
     rotation_degree.axis = 'i';
-	projection(&points, plan, rotation_degree);
+	projection(points, plan, rotation_degree);
 	factor(plan);
 	mlx.connection = mlx_init();
 	mlx.window = mlx_new_window(mlx.connection, WIDTH, HEIGHT, "Fil de fer");
@@ -157,5 +148,6 @@ int	main(int ac, char **av)
     draw(points, plan, &img);
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
 	mlx_key_hook(mlx.window, key_hook, &testing);
-	mlx_loop(mlx.connection);
+    mlx_hook( mlx.window, 33, 1L<<17, close_btn, &mlx);
+    mlx_loop(mlx.connection);
 }

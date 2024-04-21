@@ -67,16 +67,16 @@ void	mem_allocation(t_map_size *plan, t_pcord ***points)
 	}
 }
 
-void	fill(t_pcord ***points, char **dots, int i, int j)
+void	fill(t_pcord **points, char **dots, int i, int j)
 {
-	(*points)[j][i].x = i;
-	(*points)[j][i].y = j;
-	(*points)[j][i].z = ft_atoi(dots[i]);
-	(*points)[j][i].color = get_color(dots[i]);
+	points[j][i].x = i;
+	points[j][i].y = j;
+	points[j][i].z = ft_atoi(dots[i]);
+	points[j][i].color = get_color(dots[i]);
 	free(dots[i]);
 }
 
-void	map_dots(char *file, t_map_size *plan, t_pcord ***points)
+void	map_dots(char *file, t_map_size *plan, t_pcord **points)
 {
 	char	**dots;
 	char	*str;

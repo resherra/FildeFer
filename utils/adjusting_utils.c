@@ -30,7 +30,7 @@ void	translate(t_pcord *point1, t_pcord *point2, t_map_size *plan)
 
 void	factor(t_map_size *plan)
 {
-	int	width;
+	float	width;
 
     width = WIDTH - 100;
     plan->bounding_w = plan->max_x - plan->min_x;
@@ -47,9 +47,9 @@ void	factor(t_map_size *plan)
     plan->offset_x = 0;
     plan->offset_y = 0;
     if (plan->min_x < 0)
-        plan->offset_x += fabs(plan->min_x);
+        plan->offset_x += 0 - plan->min_x;
     if (plan->min_y < 0)
-        plan->offset_y += fabs(plan->min_y);
+        plan->offset_y += 0 - plan->min_y;
 
     plan->offset_x += (WIDTH - plan->max_x - plan->offset_x) / 2;
     plan->offset_y += (HEIGHT - plan->max_y - plan->offset_y) / 2;

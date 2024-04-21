@@ -20,15 +20,24 @@ void	custom_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	key_hook(int keycode, t_mlx *mlx)
+int	events_manager(int keycode, t_mlx *mlx)
 {
-	if (keycode == 53)
+	if (keycode == XK_Escape)
 	{
 		mlx_destroy_window(mlx->connection, mlx->window);
 		exit(0);
 	}
 	return (0);
 }
+
+int close_btn(t_mlx *mlx)
+{
+    mlx_destroy_window(mlx->connection, mlx->window);
+    exit(0);
+}
+
+
+
 
 void print_error(char *error_msg)
 {
@@ -52,7 +61,7 @@ int	main(int ac, char **av)
     {
         print_error("Fil de Fer: Empty file.\n");
     }
-	projection(&points, plan);
+	projection(points, plan);
 	factor(plan);
 	mlx.connection = mlx_init();
 	mlx.window = mlx_new_window(mlx.connection, WIDTH, HEIGHT, "Fil de fer");
@@ -61,6 +70,7 @@ int	main(int ac, char **av)
                                  &img.endian);
 	draw(points, plan, &img);
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
-	mlx_key_hook(mlx.window, key_hook, &mlx);
-	mlx_loop(mlx.connection);
+	mlx_key_hook(mlx.window, events_manager, &mlx);
+    mlx_hook( mlx.window, 33, 1L<<17, close_btn, &mlx);
+    mlx_loop(mlx.connection);
 }

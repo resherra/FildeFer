@@ -63,7 +63,7 @@ typedef struct s_data
 
 typedef struct s_dda
 {
-	int		steps;
+	float 	steps;
 	float	dx;
 	float	dy;
 	float	x_factor;
@@ -97,7 +97,7 @@ void		mem_allocation(t_map_size *plan, t_pcord ***points);
 t_pcord		**map_parse(char *str, t_map_size *plan);
 void		map_checker(int ac, char *map);
 int			ft_open(char *str);
-void		projection(t_pcord ***points, t_map_size *plan, t_degree degree);
+void		projection(t_pcord **points, t_map_size *plan, t_degree degree);
 void		translate(t_pcord *point1, t_pcord *point2, t_map_size *plan);
 void		scale(t_pcord *point1, t_pcord *point2, t_map_size *plan);
 void		draw(t_pcord **points, t_map_size *plan, t_data *img);
