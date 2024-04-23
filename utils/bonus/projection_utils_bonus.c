@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   projection_utils.c                                 :+:      :+:    :+:   */
+/*   projection_utils_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:59:39 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/17 19:59:40 by recherra         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:37:49 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init_bonus.h"
+#include "../../fdf_bonus.h"
 
 static void	get_res(float x, float y, t_map_size *plan)
 {
@@ -24,6 +24,21 @@ static void	get_res(float x, float y, t_map_size *plan)
 		plan->min_y = y;
 }
 
+static void	rotation(t_pcord **points, t_degree rotation_degree, int i, int j)
+{
+	if (rotation_degree.axis == 'i' || rotation_degree.axis == 'z'
+		|| rotation_degree.axis == 'p')
+		rotate_z(&points[i][j].x, &points[i][j].y, &points[i][j].z,
+			rotation_degree.z_degree);
+	if (rotation_degree.axis == 'y' || rotation_degree.axis == 'p')
+		rotate_y(&points[i][j].x, &points[i][j].y, &points[i][j].z,
+			rotation_degree.y_degree);
+	if (rotation_degree.axis == 'i' || rotation_degree.axis == 'x'
+		|| rotation_degree.axis == 'p')
+		rotate_x(&points[i][j].x, &points[i][j].y, &points[i][j].z,
+			rotation_degree.x_degree);
+}
+
 void	projection(t_pcord **points, t_map_size *plan, t_degree rotation_degree)
 {
 	int	i;
@@ -31,31 +46,16 @@ void	projection(t_pcord **points, t_map_size *plan, t_degree rotation_degree)
 
 	i = 0;
 	j = 0;
-    plan->max_x = points[i][j].x;
-    plan->min_x = points[i][j].x;
-    plan->max_y = points[i][j].y;
-    plan->min_y = points[i][j].y;
+	plan->max_x = points[i][j].x;
+	plan->min_x = points[i][j].x;
+	plan->max_y = points[i][j].y;
+	plan->min_y = points[i][j].y;
 	while (i < plan->y)
 	{
 		j = 0;
 		while (j < plan->x)
 		{
-            if (rotation_degree.axis == 'i' || rotation_degree.axis == 'z')
-            {
-                rotate_z(&points[i][j].x, &points[i][j].y,
-                         &points[i][j].z,rotation_degree.z_degree);
-            }
-            if (rotation_degree.axis == 'i' || rotation_degree.axis == 'x')
-            {
-                rotate_x(&points[i][j].x, &points[i][j].y,
-                         &points[i][j].z, rotation_degree.x_degree);
-            }
-            if (rotation_degree.axis == 'y')
-            {
-                rotate_y(&points[i][j].x, &points[i][j].y,
-                         &points[i][j].z, rotation_degree.y_degree);
-            }
-
+			rotation(points, rotation_degree, i, j);
 			get_res(points[i][j].x, points[i][j].y, plan);
 			j++;
 		}

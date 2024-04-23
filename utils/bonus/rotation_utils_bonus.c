@@ -10,21 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init_bonus.h"
+#include "../../fdf_bonus.h"
 
 void	rotate_z(float *x, float *y, float *z, int degree)
 {
 	float	cos_theta;
 	float	sin_theta;
 	float	tmp;
-    float radian = degree * (M_PI / 180);
+	float	radian;
 
+	radian = degree * (M_PI / 180);
 	cos_theta = cos(radian);
 	sin_theta = sin(radian);
 	tmp = *x;
 	*x = cos_theta * *x - sin_theta * *y;
 	*y = sin_theta * tmp + cos_theta * *y;
-    (void)*z;
+	(void)*z;
 }
 
 void	rotate_x(float *x, float *y, float *z, int degree)
@@ -32,28 +33,29 @@ void	rotate_x(float *x, float *y, float *z, int degree)
 	float	cos_theta;
 	float	sin_theta;
 	float	tmp;
+	float	radian;
 
-    float radian = degree * (M_PI / 180);
+	radian = degree * (M_PI / 180);
 	cos_theta = cos(radian);
 	sin_theta = sin(radian);
 	tmp = *y;
-    (void)*x;
+	(void)*x;
 	*y = cos_theta * *y - sin_theta * *z;
 	*z = sin_theta * tmp + cos_theta * *z;
 }
 
-
 void	rotate_y(float *x, float *y, float *z, int degree)
 {
-    float	cos_theta;
-    float	sin_theta;
-    float	tmp;
+	float	cos_theta;
+	float	sin_theta;
+	float	tmp;
+	float	radian;
 
-    float radian = degree * (M_PI / 180);
-    cos_theta = cos(radian);
-    sin_theta = sin(radian);
-    tmp = *x;
-    (void)*y;
-    *x = cos_theta * *x + sin_theta * *z;
-    *z = -sin_theta * tmp + cos_theta * *z;
+	radian = degree * (M_PI / 180);
+	cos_theta = cos(radian);
+	sin_theta = sin(radian);
+	tmp = *x;
+	(void)*y;
+	*x = cos_theta * *x + sin_theta * *z;
+	*z = -sin_theta * tmp + cos_theta * *z;
 }

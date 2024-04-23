@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parse.c                                        :+:      :+:    :+:   */
+/*   duplicate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 22:32:40 by recherra          #+#    #+#             */
-/*   Updated: 2024/03/31 22:55:51 by recherra         ###   ########.fr       */
+/*   Created: 2024/04/23 20:58:39 by recherra          #+#    #+#             */
+/*   Updated: 2024/04/23 20:58:41 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf_bonus.h"
 
-int	ft_open(char *str)
+t_pcord	**duplicate_arr(t_map_size *plan, t_pcord **points)
 {
-	int	fd;
+	int		i;
+	int		j;
+	t_pcord	**cpy;
 
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
+	i = 0;
+	j = 0;
+	mem_allocation(plan, &cpy);
+	while (i < plan->y)
 	{
-		perror("Fil de Fer");
-		exit(1);
+		j = 0;
+		while (j < plan->x)
+		{
+			cpy[i][j].x = points[i][j].x;
+			cpy[i][j].y = points[i][j].y;
+			cpy[i][j].z = points[i][j].z;
+			cpy[i][j].color = points[i][j].color;
+			j++;
+		}
+		i++;
 	}
-	return (fd);
-}
-
-t_pcord	**map_parse(char *str, t_map_size *plan)
-{
-	int		fd;
-	t_pcord	**points;
-
-	plan->x = 0;
-	plan->y = 0;
-	fd = ft_open(str);
-	cols_rows_count(fd, plan);
-	mem_allocation(plan, &points);
-	map_dots(str, plan, points);
-	return (points);
+	return (cpy);
 }

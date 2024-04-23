@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   adjusting_utils.c                                  :+:      :+:    :+:   */
+/*   adjusting_utils_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/17 18:50:23 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/17 18:50:25 by recherra         ###   ########.fr       */
+/*   Created: 2024/04/23 12:18:36 by recherra          #+#    #+#             */
+/*   Updated: 2024/04/23 12:18:38 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../fdf_bonus.h"
 
 void	scale(t_pcord *point1, t_pcord *point2, t_map_size *plan)
 {

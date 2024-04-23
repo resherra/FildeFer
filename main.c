@@ -10,19 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "init.h"
-
-void	custom_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
+#include "fdf.h"
 
 int	events_manager(int keycode, t_mlx *mlx)
 {
-	if (keycode == XK_Escape)
+	if (keycode == 53)
 	{
 		mlx_destroy_window(mlx->connection, mlx->window);
 		exit(0);
@@ -30,19 +22,16 @@ int	events_manager(int keycode, t_mlx *mlx)
 	return (0);
 }
 
-int close_btn(t_mlx *mlx)
+int	close_btn(t_mlx *mlx)
 {
-    mlx_destroy_window(mlx->connection, mlx->window);
-    exit(0);
+	mlx_destroy_window(mlx->connection, mlx->window);
+	exit(0);
 }
 
-
-
-
-void print_error(char *error_msg)
+void	print_error(char *error_msg)
 {
-    ft_putstr(error_msg);
-    exit(1);
+	ft_putstr(error_msg);
+	exit(1);
 }
 
 int	main(int ac, char **av)
@@ -57,20 +46,18 @@ int	main(int ac, char **av)
 	if (!plan)
 		return (0);
 	points = map_parse(av[1], plan);
-    if (!plan->y)
-    {
-        print_error("Fil de Fer: Empty file.\n");
-    }
+	if (!plan->y)
+		print_error("Fil de Fer: Empty file.\n");
 	projection(points, plan);
 	factor(plan);
 	mlx.connection = mlx_init();
 	mlx.window = mlx_new_window(mlx.connection, WIDTH, HEIGHT, "Fil de fer");
 	img.img = mlx_new_image(mlx.connection, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-                                 &img.endian);
+			&img.endian);
 	draw(points, plan, &img);
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
 	mlx_key_hook(mlx.window, events_manager, &mlx);
-    mlx_hook( mlx.window, 33, 1L<<17, close_btn, &mlx);
-    mlx_loop(mlx.connection);
+	mlx_hook(mlx.window, 17, 0, close_btn, &mlx);
+	mlx_loop(mlx.connection);
 }

@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parse.c                                        :+:      :+:    :+:   */
+/*   miscs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/31 22:32:40 by recherra          #+#    #+#             */
-/*   Updated: 2024/03/31 22:55:51 by recherra         ###   ########.fr       */
+/*   Created: 2024/04/23 21:00:36 by recherra          #+#    #+#             */
+/*   Updated: 2024/04/23 21:00:48 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf_bonus.h"
 
-int	ft_open(char *str)
+int	key_check(int key)
 {
-	int	fd;
-
-	fd = open(str, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Fil de Fer");
-		exit(1);
-	}
-	return (fd);
+	if (key == 53 || key == 35 || key == 123 || key == 124 || key == 125
+		|| key == 126 || key == 3 || key == 5 || key == 7 || key == 6
+		|| key == 16)
+		return (1);
+	return (0);
 }
 
-t_pcord	**map_parse(char *str, t_map_size *plan)
+int	close_btn(t_mlx *mlx)
 {
-	int		fd;
-	t_pcord	**points;
+	mlx_destroy_window(mlx->connection, mlx->window);
+	exit(0);
+}
 
-	plan->x = 0;
-	plan->y = 0;
-	fd = ft_open(str);
-	cols_rows_count(fd, plan);
-	mem_allocation(plan, &points);
-	map_dots(str, plan, points);
-	return (points);
+void	print_error(char *error_msg)
+{
+	ft_putstr(error_msg);
+	exit(1);
 }

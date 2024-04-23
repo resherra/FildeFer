@@ -10,27 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "../fdf.h"
 
-void ft_putstr(char *s)
+void	ft_putstr(char *s)
 {
-    int	i;
+	int	i;
 
-    i = 0;
-    while (s[i])
-    {
-        write(1, &s[i], 1);
-        i++;
-    }
+	i = 0;
+	while (s[i])
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
 }
 
 void	map_checker(int ac, char *map)
 {
-    int len;
+	int	len;
 
-    if (ac != 2)
-        print_error("Fil de Fer: more/less arguments.\n");
-    len = ft_strlen(map);
-    if (!ft_strnstr(map + (len - 4), ".fdf", 4))
-        print_error("Fil de Fer: Invalid file type.\n");
+	if (ac != 2)
+		print_error("Fil de Fer: more/less arguments.\n");
+	len = ft_strlen(map);
+	if (!ft_strnstr(map + (len - 4), ".fdf", 4))
+		print_error("Fil de Fer: Invalid file type.\n");
 }

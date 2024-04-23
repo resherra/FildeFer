@@ -10,7 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init_bonus.h"
+#include "../../fdf_bonus.h"
+
+void	custom_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
 
 static void	dda(t_pcord point1, t_pcord point2, t_map_size *plan, t_data *img)
 {
@@ -19,28 +27,20 @@ static void	dda(t_pcord point1, t_pcord point2, t_map_size *plan, t_data *img)
 
 	scale(&point1, &point2, plan);
 	translate(&point1, &point2, plan);
-
-
 	calcs.dx = point2.x - point1.x;
 	calcs.dy = point2.y - point1.y;
-
-    if (fabs(calcs.dx) >= fabs(calcs.dy))
-    {
-        calcs.steps = fabs(calcs.dx);
-
-    }
-    else
-    {
-        calcs.steps = fabs(calcs.dy);
-    }
-
+	if (fabs(calcs.dx) >= fabs(calcs.dy))
+		calcs.steps = fabs(calcs.dx);
+	else
+		calcs.steps = fabs(calcs.dy);
 	calcs.x_factor = calcs.dx / calcs.steps;
 	calcs.y_factor = calcs.dy / calcs.steps;
 	i = 0;
 	while (i < calcs.steps)
 	{
-        if (point1.y < HEIGHT && point1.y > 0 && point1.x < WIDTH && point1.x > 0)
-            custom_mlx_pixel_put(img, point1.x, point1.y, point1.color);
+		if (point1.y < HEIGHT && point1.y > 0 && point1.x < WIDTH
+			&& point1.x > 0)
+			custom_mlx_pixel_put(img, point1.x, point1.y, point1.color);
 		point1.x += calcs.x_factor;
 		point1.y += calcs.y_factor;
 		i++;

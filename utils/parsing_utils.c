@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../init.h"
+#include "../fdf.h"
 
 static int	rows_count(char *line)
 {
@@ -42,11 +42,11 @@ void	cols_rows_count(int fd, t_map_size *plan)
 		if (plan->y == 0)
 			first_row = plan->x;
 		if (plan->x != first_row)
-            print_error("Fil de Fer: the map columns are not equal.\n");
-        free(str);
-        str = get_next_line(fd);
+			print_error("Fil de Fer: the map columns are not equal.\n");
+		free(str);
+		str = get_next_line(fd);
 		plan->y++;
-    }
+	}
 	close(fd);
 }
 
