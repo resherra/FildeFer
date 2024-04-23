@@ -29,9 +29,6 @@ void rebuild(t_bonus *testing)
                                           &testing->img.endian);
 }
 
-
-
-
 //linux
 int	key_hook(int keycode, t_bonus *testing)
 {
@@ -63,6 +60,9 @@ int	key_hook(int keycode, t_bonus *testing)
         testing->degrees.x_degree = 10.00;
         testing->degrees.axis = 'x';
         projection(testing->points, testing->calcs, testing->degrees);
+        static float degreex;
+
+        degreex += testing->degrees.x_degree;
     }
     if (keycode == 122) //z
     {
@@ -70,6 +70,9 @@ int	key_hook(int keycode, t_bonus *testing)
         testing->degrees.z_degree = 10.00;
         testing->degrees.axis = 'z';
         projection(testing->points, testing->calcs, testing->degrees);
+        static float degreez;
+
+        degreez += testing->degrees.z_degree;
     }
     if (keycode == 121) //y
     {
@@ -77,10 +80,14 @@ int	key_hook(int keycode, t_bonus *testing)
         testing->degrees.y_degree = 10.00;
         testing->degrees.axis = 'y';
         projection(testing->points, testing->calcs, testing->degrees);
+
+        static float degreey;
+
+        degreey += testing->degrees.y_degree;
     }
     draw(testing->points, testing->calcs, &testing->img);
     mlx_put_image_to_window(testing->mlx.connection, testing->mlx.window, testing->img.img, 0, 0);
-	return (0);
+    return (0);
 }
 
 int close_btn(t_mlx *mlx)
@@ -126,9 +133,11 @@ int	main(int ac, char **av)
     {
         print_error("Fil de Fer: Empty file.\n");
     }
+//    rotation_degree.z_degree = 45;
+//    rotation_degree.x_degree = 35.264;
     rotation_degree.z_degree = 45;
-    rotation_degree.x_degree = 35.264;
-    rotation_degree.y_degree = 0;
+    rotation_degree.x_degree = 30;
+    rotation_degree.y_degree = 30;
     rotation_degree.axis = 'i';
 	projection(points, plan, rotation_degree);
 	factor(plan);

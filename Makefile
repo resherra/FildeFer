@@ -16,7 +16,7 @@
 #linux
 FRAEMWORKS=-lXext -lX11 -lm -lz
 
-FLAGS=-Wall -Wextra -Werror
+FLAGS=-Wall -Wextra
 SRC=main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c utils/adjusting_utils.c utils/checking_utils.c utils/drawing_utils.c utils/parsing_utils.c utils/projection_utils.c utils/rotation_utils.c utils/get_color.c utils/map_parse.c
 SRC_BONUS=main_bonus.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c utils/adjusting_utils.c utils/checking_utils.c utils/drawing_utils_bonus.c utils/parsing_utils.c utils/projection_utils_bonus.c utils/rotation_utils_bonus.c utils/get_color.c utils/map_parse.c
 

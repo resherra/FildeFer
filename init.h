@@ -63,11 +63,11 @@ typedef struct s_data
 
 typedef struct s_dda
 {
-	double		steps;
-	double	dx;
-	double	dy;
-	double	x_factor;
-	double	y_factor;
+	float		steps;
+	float	dx;
+	float	dy;
+	float	x_factor;
+	float	y_factor;
 }			t_dda;
 
 void		cols_rows_count(int fd, t_map_size *plan);

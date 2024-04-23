@@ -19,12 +19,21 @@ static void	dda(t_pcord point1, t_pcord point2, t_map_size *plan, t_data *img)
 
 	scale(&point1, &point2, plan);
 	translate(&point1, &point2, plan);
+
+
 	calcs.dx = point2.x - point1.x;
 	calcs.dy = point2.y - point1.y;
-	if (calcs.dx >= calcs.dy)
-		calcs.steps = calcs.dx;
-	else
-		calcs.steps = calcs.dy;
+
+    if (fabs(calcs.dx) >= fabs(calcs.dy))
+    {
+        calcs.steps = fabs(calcs.dx);
+
+    }
+    else
+    {
+        calcs.steps = fabs(calcs.dy);
+    }
+
 	calcs.x_factor = calcs.dx / calcs.steps;
 	calcs.y_factor = calcs.dy / calcs.steps;
 	i = 0;
