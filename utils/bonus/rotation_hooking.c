@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:47:42 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/23 21:38:36 by recherra         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:25:38 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,25 @@ void	rebuild(t_bonus *init)
 			&init->img.line_length, &init->img.endian);
 }
 
-void	reproject_basic(int keycode, t_bonus *init)
+void	reproject(int keycode, t_bonus *init)
 {
 	if (keycode == 7)
 	{
-		init->degrees.x_degree = 10.00;
+		init->degrees.x_degree = 5;
 		init->degrees.axis = 'x';
 		projection(init->points, init->calcs, init->degrees);
 	}
-	if (keycode == 16)
+	else if (keycode == 16)
 	{
-		init->degrees.y_degree = 10.00;
+		init->degrees.y_degree = 5;
 		init->degrees.axis = 'y';
 		projection(init->points, init->calcs, init->degrees);
 	}
-	if (keycode == 6)
+	else if (keycode == 6)
 	{
-		init->degrees.z_degree = 10.00;
+		init->degrees.z_degree = 5;
 		init->degrees.axis = 'z';
 		projection(init->points, init->calcs, init->degrees);
-	}
-}
-
-void	reproject(int keycode, t_bonus *init)
-{
-	reproject_basic(keycode, init);
-	if (keycode == 35)
-	{
-		init->degrees.x_degree = 90;
-		init->degrees.z_degree = 0;
-		init->degrees.y_degree = 0;
-		init->degrees.axis = 'p';
-		projection(init->cpy, init->calcs, init->degrees);
 	}
 }
 
@@ -59,19 +46,19 @@ int	readjust(int keycode, t_bonus *init)
 {
 	if (keycode == 124)
 		init->calcs->offset_x += 20;
-	if (keycode == 123)
+	else if (keycode == 123)
 		init->calcs->offset_x -= 20;
-	if (keycode == 126)
+	else if (keycode == 126)
 		init->calcs->offset_y -= 20;
-	if (keycode == 125)
+	else if (keycode == 125)
 		init->calcs->offset_y += 20;
-	if (keycode == 3)
-		init->calcs->scale_f += 1.4;
-	if (keycode == 5)
+	else if (keycode == 3)
+		init->calcs->scale_f += 1;
+	else if (keycode == 5)
 	{
-		if (init->calcs->scale_f - 1.4 < 0)
+		if (init->calcs->scale_f - 1 < 0)
 			return (0);
-		init->calcs->scale_f -= 1.4;
+		init->calcs->scale_f -= 1;
 	}
 	return (1);
 }
@@ -87,10 +74,7 @@ int	key_hook(int keycode, t_bonus *init)
 	}
 	readjust(keycode, init);
 	reproject(keycode, init);
-	if (keycode == 35)
-		draw(init->cpy, init->calcs, &init->img);
-	else if (key_check(keycode))
-		draw(init->points, init->calcs, &init->img);
+	draw(init->points, init->calcs, &init->img);
 	mlx_put_image_to_window(init->mlx.connection, init->mlx.window,
 		init->img.img, 0, 0);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:59:39 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/23 21:37:49 by recherra         ###   ########.fr       */
+/*   Updated: 2024/04/25 17:25:14 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ static void	get_res(float x, float y, t_map_size *plan)
 
 static void	rotation(t_pcord **points, t_degree rotation_degree, int i, int j)
 {
-	if (rotation_degree.axis == 'i' || rotation_degree.axis == 'z'
-		|| rotation_degree.axis == 'p')
+	if (rotation_degree.axis == 'z')
 		rotate_z(&points[i][j].x, &points[i][j].y, &points[i][j].z,
 			rotation_degree.z_degree);
-	if (rotation_degree.axis == 'y' || rotation_degree.axis == 'p')
+	if (rotation_degree.axis == 'y')
 		rotate_y(&points[i][j].x, &points[i][j].y, &points[i][j].z,
 			rotation_degree.y_degree);
-	if (rotation_degree.axis == 'i' || rotation_degree.axis == 'x'
-		|| rotation_degree.axis == 'p')
+	if (rotation_degree.axis == 'x' || rotation_degree.axis == 'p')
 		rotate_x(&points[i][j].x, &points[i][j].y, &points[i][j].z,
 			rotation_degree.x_degree);
 }

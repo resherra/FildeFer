@@ -33,7 +33,7 @@ void	rotate_x(float *x, float *y, float *z)
 	float	tmp;
 	float	s;
 
-	s = atan(sqrt(2));
+	s = atan(1 / sqrt(2));
 	cos_theta = cos(s);
 	sin_theta = sin(s);
 	tmp = *y;

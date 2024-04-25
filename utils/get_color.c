@@ -82,9 +82,7 @@ int	get_color(char *point)
 		if (is_all_digits(color_str + 1))
 			color = ft_atoi(color_str + 1);
 		else
-		{
 			color = hex_to_de(color_str);
-		}
 	}
 	return (color);
 }

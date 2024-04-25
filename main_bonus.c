@@ -14,10 +14,10 @@
 
 void	initial_values(t_bonus *init)
 {
-	init->degrees.z_degree = 45;
-	init->degrees.x_degree = 53.264;
+	init->degrees.x_degree = 90;
+	init->degrees.z_degree = 0;
 	init->degrees.y_degree = 0;
-	init->degrees.axis = 'i';
+	init->degrees.axis = 'p';
 }
 
 void	mlx_initial(t_mlx *mlx, t_data *img)
@@ -49,7 +49,6 @@ int	main(int ac, char **av)
 	if (!plan)
 		return (0);
 	points = map_parse(av[1], plan);
-	init.cpy = duplicate_arr(plan, points);
 	if (!plan->y)
 		print_error("Fil de Fer: Empty file.\n");
 	initial_values(&init);
@@ -60,7 +59,7 @@ int	main(int ac, char **av)
 	fill_init(&init, plan, points, img);
 	draw(points, plan, &img);
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
-	mlx_key_hook(mlx.window, key_hook, &init);
 	mlx_hook(mlx.window, 17, 0, close_btn, &mlx);
+	mlx_hook(mlx.window, 2, 0, key_hook, &init);
 	mlx_loop(mlx.connection);
 }
