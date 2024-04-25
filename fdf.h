@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 17:37:42 by recherra          #+#    #+#             */
-/*   Updated: 2024/03/23 17:37:46 by recherra         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:59:51 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_dda
 	float	x_factor;
 	float	y_factor;
 }			t_dda;
+
 
 void		cols_rows_count(int fd, t_map_size *plan);
 int			get_color(char *point);
