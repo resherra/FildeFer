@@ -86,6 +86,8 @@ typedef struct s_bonus
 	t_degree	degrees;
 }				t_bonus;
 
+void			mlx_initial(t_mlx *mlx, t_data *img);
+void			init_error(void *ptr);
 void			cols_rows_count(int fd, t_map_size *plan);
 int				get_color(char *point);
 void			map_dots(char *file, t_map_size *plan, t_pcord ***points);
@@ -100,7 +102,6 @@ void			draw(t_pcord **points, t_map_size *plan, t_data *img);
 void			custom_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			factor(t_map_size *plan);
 void			ft_putstr(char *s);
-
 void			rotate_z(float *x, float *y, float *z, int degree);
 void			rotate_x(float *x, float *y, float *z, int degree);
 void			rotate_y(float *x, float *y, float *z, int degree);

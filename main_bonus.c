@@ -20,15 +20,6 @@ void	initial_values(t_bonus *init)
 	init->degrees.axis = 'p';
 }
 
-void	mlx_initial(t_mlx *mlx, t_data *img)
-{
-	mlx->connection = mlx_init();
-	mlx->window = mlx_new_window(mlx->connection, WIDTH, HEIGHT, "Fil de fer");
-	img->img = mlx_new_image(mlx->connection, WIDTH, HEIGHT);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-}
-
 void	fill_init(t_bonus *init, t_map_size *plan, t_pcord **points, t_data img)
 {
 	init->calcs = plan;

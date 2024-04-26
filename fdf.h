@@ -69,7 +69,8 @@ typedef struct s_dda
 	float	y_factor;
 }			t_dda;
 
-
+void		init_error(void *ptr);
+void		mlx_initial(t_mlx *mlx, t_data *img);
 void		cols_rows_count(int fd, t_map_size *plan);
 int			get_color(char *point);
 void		map_dots(char *file, t_map_size *plan, t_pcord **points);
@@ -86,7 +87,7 @@ void		factor(t_map_size *plan);
 void		ft_putstr(char *s);
 void		print_error(char *str);
 void		custom_mlx_pixel_put(t_data *data, int x, int y, int color);
-//rotation
+int			close_btn(t_mlx *mlx);
 void		rotate_z(float *x, float *y, float *z);
 void		rotate_x(float *x, float *y, float *z);
 

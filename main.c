@@ -22,18 +22,6 @@ int	events_manager(int keycode, t_mlx *mlx)
 	return (0);
 }
 
-int	close_btn(t_mlx *mlx)
-{
-	mlx_destroy_window(mlx->connection, mlx->window);
-	exit(0);
-}
-
-void	print_error(char *error_msg)
-{
-	ft_putstr(error_msg);
-	exit(1);
-}
-
 int	main(int ac, char **av)
 {
 	t_pcord		**points;
@@ -50,11 +38,7 @@ int	main(int ac, char **av)
 		print_error("Fil de Fer: Empty file.\n");
 	projection(points, plan);
 	factor(plan);
-	mlx.connection = mlx_init();
-	mlx.window = mlx_new_window(mlx.connection, WIDTH, HEIGHT, "Fil de fer");
-	img.img = mlx_new_image(mlx.connection, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-			&img.endian);
+	mlx_initial(&mlx, &img);
 	draw(points, plan, &img);
 	mlx_put_image_to_window(mlx.connection, mlx.window, img.img, 0, 0);
 	mlx_key_hook(mlx.window, events_manager, &mlx);

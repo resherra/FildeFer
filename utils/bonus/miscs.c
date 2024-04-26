@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:00:36 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/23 21:00:48 by recherra         ###   ########.fr       */
+/*   Updated: 2024/04/26 16:47:16 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,25 @@ void	print_error(char *error_msg)
 {
 	ft_putstr(error_msg);
 	exit(1);
+}
+
+void	init_error(void *ptr)
+{
+	if (!ptr)
+	{
+		print_error("Unknown error happened!");
+		exit(1);
+	}
+}
+
+void	mlx_initial(t_mlx *mlx, t_data *img)
+{
+	mlx->connection = mlx_init();
+	init_error(mlx->connection);
+	mlx->window = mlx_new_window(mlx->connection, WIDTH, HEIGHT, "Fil de fer");
+	init_error(mlx->window);
+	img->img = mlx_new_image(mlx->connection, WIDTH, HEIGHT);
+	init_error(img->img);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 }

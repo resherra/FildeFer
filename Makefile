@@ -22,7 +22,8 @@ SRC=main.c\
 	utils/projection_utils.c\
 	utils/rotation_utils.c\
 	utils/get_color.c\
-	utils/map_parse.c
+	utils/map_parse.c\
+	 utils/bonus/miscs.c
 SRC_BONUS=main_bonus.c\
  	get_next_line/get_next_line.c\
  	get_next_line/get_next_line_utils.c\
@@ -40,24 +41,28 @@ OBJS=${SRC:.c=.o}
 OBJS_BONUS=${SRC_BONUS:.c=.o}
 LIBFT=libft/libft.a
 NAME=fdf
+BONUS_NAME=fdf_bonus
 
-all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS) fdf.h
-	cc $(OBJS) -o $(NAME) $(FLAGS) $(LIBFT) $(FRAMEWORKS) 
+all: ${NAME}
 
-$(LIBFT):
-	make -C libft/ all
+${NAME}: ${LIBFT} ${OBJS} fdf.h
+	cc ${OBJS} -o ${NAME} ${FLAGS} ${LIBFT} ${FRAMEWORKS}
 
-bonus: $(LIBFT) $(OBJS_BONUS)
-	cc $(OBJS_BONUS) -o $(NAME) $(FLAGS) $(LIBFT) $(FRAMEWORKS)
+${LIBFT}:
+	make -C libft/
+
+bonus: ${BONUS_NAME}
+
+${BONUS_NAME}: ${LIBFT} ${OBJS_BONUS} fdf_bonus.h
+	cc ${OBJS_BONUS} -o ${BONUS_NAME} ${FLAGS} ${LIBFT} ${FRAMEWORKS}
 
 clean:
 	make -C libft/ clean
-	rm -rf $(OBJS) $(OBJS_BONUS)
+	rm -rf ${OBJS} ${OBJS_BONUS}
 
 fclean: clean
 	make -C libft/ fclean
-	rm $(NAME)
+	rm ${NAME} ${BONUS_NAME}
 
 re: fclean all
