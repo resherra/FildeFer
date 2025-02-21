@@ -11,7 +11,7 @@ A wireframe modeling sftwr built with C and a mini graphics library ([minilibx](
 
 
 ```
-./fdf_bonus maps/elem-fract.fdf
+./fdf maps/elem-fract.fdf
 ```
 
 
