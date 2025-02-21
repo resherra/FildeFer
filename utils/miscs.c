@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:00:36 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/26 16:47:16 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:19:53 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../fdf_bonus.h"
+#include "../fdf.h"
 
 int	key_check(int key)
 {

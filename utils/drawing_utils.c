@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:03:31 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/17 20:03:33 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:19:43 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	custom_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 static void	dda(t_pcord point1, t_pcord point2, t_map_size *plan, t_data *img)
 {
-	float	i;
+	int		i;
 	t_dda	calcs;
 
 	scale(&point1, &point2, plan);

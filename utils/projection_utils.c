@@ -6,7 +6,7 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 19:59:39 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/17 19:59:40 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:20:00 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,20 @@ static void	get_res(float x, float y, t_map_size *plan)
 		plan->min_y = y;
 }
 
-void	projection(t_pcord **points, t_map_size *plan)
+static void	rotation(t_pcord **points, t_degree rotation_degree, int i, int j)
+{
+	if (rotation_degree.axis == 'z')
+		rotate_z(&points[i][j].x, &points[i][j].y, &points[i][j].z,
+			rotation_degree.z_degree);
+	if (rotation_degree.axis == 'y')
+		rotate_y(&points[i][j].x, &points[i][j].y, &points[i][j].z,
+			rotation_degree.y_degree);
+	if (rotation_degree.axis == 'x' || rotation_degree.axis == 'p')
+		rotate_x(&points[i][j].x, &points[i][j].y, &points[i][j].z,
+			rotation_degree.x_degree);
+}
+
+void	projection(t_pcord **points, t_map_size *plan, t_degree rotation_degree)
 {
 	int	i;
 	int	j;
@@ -40,8 +53,7 @@ void	projection(t_pcord **points, t_map_size *plan)
 		j = 0;
 		while (j < plan->x)
 		{
-			rotate_z(&points[i][j].x, &points[i][j].y, &points[i][j].z);
-			rotate_x(&points[i][j].x, &points[i][j].y, &points[i][j].z);
+			rotation(points, rotation_degree, i, j);
 			get_res(points[i][j].x, points[i][j].y, plan);
 			j++;
 		}

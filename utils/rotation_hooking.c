@@ -6,11 +6,11 @@
 /*   By: recherra <recherra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:47:42 by recherra          #+#    #+#             */
-/*   Updated: 2024/04/26 16:53:49 by recherra         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:20:08 by recherra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../fdf_bonus.h"
+#include "../fdf.h"
 
 void	rebuild(t_bonus *init)
 {
