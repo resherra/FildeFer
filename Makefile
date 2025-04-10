@@ -10,7 +10,8 @@
 #                                                                              #
 # **************************************************************************** #
 
-FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
+# FRAMEWORKS=-lmlx -framework OpenGL -framework AppKit
+FRAMEWORKS=-lmlx_Linux -lXext -lX11 -lm -lz
 FLAGS=-Wall -Wextra -Werror
 SRC=main.c\
  	get_next_line/get_next_line.c\
