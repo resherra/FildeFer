@@ -20,30 +20,29 @@
 #include <mlx.h>
 #include <stdio.h>
 
-#define WIDTH 1280
-#define HEIGHT 720
-
 #define MODE 0
 
-#if MODE == 1
+#if MODE == 0
 
-#define TILE 16
 #define WIDTH 1920
 #define HEIGHT 1080
-#define MINIMAP_WIDTH 426
-#define MINIMAP_HEIGHT 240
-#define ESC 53
-#define RA 124
-#define LA 123
-#define WK 13
-#define AK 0
-#define SK 1
-#define DK 2
+#define ESC 53 // Escape key
+#define RA 124 // Right Arrow
+#define LA 123 // Left Arrow
+#define UA 126 // Up Arrow
+#define DA 125 // Down Arrow
+#define FK 3   // 'f' key
+#define GK 5   // 'g' key
+#define XK 7   // 'x' key
+#define ZK 6   // 'z' key
+#define YK 16  // 'y' key
 
 #else
 
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
+#define WIDTH 1280
+#define HEIGHT 720
 #define ESC XK_Escape
 #define RA XK_Right
 #define LA XK_Left
@@ -54,7 +53,6 @@
 #define XK XK_x
 #define ZK XK_z
 #define YK XK_y
-#define PK XK_p
 
 #endif
 
@@ -120,13 +118,14 @@ typedef struct s_keys_state
     int x;
     int z;
     int y;
-    int p;
-    int left_arrow;
-    int right_arrow;
-    int up_arrow;
-    int down_arrow;
-
 } t_keys_state;
+
+typedef struct s_mouse_state
+{
+    int left_button;
+    int scroll_up;
+    int scroll_down;
+} t_mouse_state;
 
 typedef struct s_bonus
 {
@@ -136,6 +135,7 @@ typedef struct s_bonus
     t_data img;
     t_degree degrees;
     t_keys_state state;
+    t_mouse_state mouse_state;
     float prev_x;
     float prev_y;
 } t_bonus;
@@ -166,6 +166,19 @@ void reproject(int keycode, t_bonus *init);
 int readjust(int keycode, t_bonus *init);
 int key_hook(int keycode, t_bonus *init);
 int key_check(int key);
-int key_check(int key);
+void re_render(t_bonus *init);
+
+// keys hoo utils
+int key_press(int keycode, t_bonus *data);
+int key_release(int keycode, t_bonus *data);
+void set_state(t_bonus *data, int key_button_code, int state);
+
+// mouse hooks utils
+int mouse_press(int button, int x, int y, t_bonus *data);
+int mouse_release(int button, int x, int y, t_bonus *data);
+int mouse_hook(int x, int y, t_bonus *data);
+
+// ultimate hook
+int ultimate_hook(t_bonus *init);
 
 #endif

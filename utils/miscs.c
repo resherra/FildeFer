@@ -14,7 +14,7 @@
 
 int key_check(int key)
 {
-    if (key == ESC || key == PK || key == LA || key == RA || key == DA || key == UA || key == FK || key == GK || key == XK || key == ZK || key == YK)
+    if (key == ESC || key == FK || key == GK || key == XK || key == ZK || key == YK)
         return (1);
     return (0);
 }
